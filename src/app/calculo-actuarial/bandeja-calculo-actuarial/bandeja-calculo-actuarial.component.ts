@@ -31,4 +31,12 @@ export class BandejaCalculoActuarialComponent implements OnInit {
 
   }
 
+  anularPlanillas(){
+    this.router.navigate(['/calculo-actuarial/anular-planillas'])
+  }
+
+  
+  anularSolicitud(){
+    this.router.navigate(['/calculo-actuarial/anular-solicitud'])
+  }
 }

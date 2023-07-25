@@ -7,10 +7,6 @@ const routes: Routes = [
     path: 'calculo-actuarial', loadChildren: () =>
       import('./calculo-actuarial/calculo-actuarial.module').then(m => m.CalculoActuarialModule)
   },
-  {
-    path: 'menu-02', loadChildren: () =>
-      import('./menu02/menu02.module').then(m => m.Menu02Module)
-  },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 

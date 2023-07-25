@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ver-detalle-parametros',
@@ -9,9 +10,20 @@ export class VerDetalleParametrosComponent implements OnInit {
 
   p: number = 1;
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit() {
+  }
+
+  cerrar(){
+    this.router.navigate(['/calculo-actuarial/solicitud-bandeja'])
+
+  }
+
+  descargar(){}
+
+  verMovimientos(){
+    this.router.navigate(['/calculo-actuarial/ver-detalle-movimientos'])
   }
 
 }

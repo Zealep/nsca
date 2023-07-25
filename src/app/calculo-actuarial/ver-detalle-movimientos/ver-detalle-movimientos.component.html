@@ -1,0 +1,67 @@
+<div class="container">
+
+
+    <div>
+      <i class="fa-solid fa-user me-2"></i>
+      <span><strong>Solicitud N° 2753</strong></span>
+      <span class="ms-5">Usuario: JBAUTISTA</span>
+    </div>
+  
+    <div class="container mt-3">
+      <form>
+  
+        <div class="row">
+          <div class="col-6">
+            <label for="fechaSolicitud" class="form-label">Fecha de solicitud (*)</label>
+            <input type="text" class="form-control" id="fechaSolicitud">
+          </div>
+  
+          <div class="col-6">
+            <label for="periodo" class="form-label">Periodo de Cálculo (*)</label>
+            <input type="text" class="form-control" id="periodo">
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-6">
+            <label for="tipoSolicitud" class="form-label">Tipo de Solicitud (*)</label>
+            <input type="text" class="form-control" id="tipoSolicitud">
+  
+          </div>
+  
+        </div>
+      </form>
+  
+      <div>
+  
+        <label for="parametros" class="form-label">Movimientos</label>
+  
+        <table class="table table-sm table-bordered" id="parametros">
+          <thead>
+            <tr>
+              <th>Proceso ejecutado</th>
+              <th>Estado nuevo</th>
+              <th>Usuario </th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr></tr>
+          </tbody>
+        </table>
+  
+      </div>
+  
+      <pagination-controls class="my-pagination" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="p = $event">
+  
+      </pagination-controls>
+  
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-primary btn-sm" (click)="cerrar()">Cerrar</button>
+        <button class="btn btn-primary btn-sm ms-2" (click)="descargar()">Descargar</button>
+        <button class="btn btn-primary btn-sm ms-2" (click)="verParametros()">Parámetros</button>
+      </div>
+  
+    </div>
+  </div>
+  

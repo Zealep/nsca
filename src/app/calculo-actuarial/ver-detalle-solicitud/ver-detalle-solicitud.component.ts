@@ -14,6 +14,7 @@ export class VerDetalleSolicitudComponent implements OnInit {
   }
 
   cerrar() {
+    this.router.navigate(['/calculo-actuarial/solicitud-bandeja'])
 
   }
 
@@ -23,6 +24,7 @@ export class VerDetalleSolicitudComponent implements OnInit {
   }
 
   verDetalleMovimiento() {
+    this.router.navigate(['/calculo-actuarial/ver-detalle-movimientos'])
 
   }
 

@@ -17,7 +17,7 @@ registerLocaleData(es);
   declarations: [
     AppComponent,
     SideNavComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
