@@ -1,0 +1,109 @@
+<div class="container p-3">
+  <div>
+    <i class="fa-solid fa-user me-2"></i>
+    <span><strong>Nueva solicitud</strong></span>
+    <span class="ms-5">Usuario: JBAUTISTA</span>
+  </div>
+  <div class="container mt-3">
+    <form>
+
+      <div class="row">
+        <div class="col-6">
+          <label for="fechaSolicitud" class="form-label">Fecha de solicitud (*)</label>
+          <input type="date" class="form-control" id="fechaSolicitud">
+        </div>
+
+        <div class="col-6">
+          <label for="fechaSolicitud" class="form-label">Periodo de Cálculo (*)</label>
+          <input type="date" class="form-control" id="fechaSolicitud">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <label for="tipoSolicitud" class="form-label">Tipo de Solicitud</label>
+          <select id="tipoSolicitud" class="form-select form-select-sm custom-select">
+            <option value="0">-</option>
+            <option value="1">CALCULO ACTUARIAL 19990</option>
+            <option value="2">CÁLCULO DS026 </option>
+            <option value="3">CÁLCULO FCR </option>
+          </select> </div>
+
+        <div class="col-6">
+          <label for="grupoPlantillas" class="form-label">Plantillas</label>
+          <div class="form-check" id="grupoPlantillas">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled">
+            <label class="form-check-label" for="flexCheckDisabled">
+              Pensionistas
+            </label>
+          </div>
+
+          <div class="form-check" id="grupoPlantillas">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled">
+            <label class="form-check-label" for="flexCheckDisabled">
+              Contingencia administrativa
+            </label>
+          </div>
+
+          <div class="form-check" id="grupoPlantillas">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled">
+            <label class="form-check-label" for="flexCheckDisabled">
+              Afiliados
+            </label>
+          </div>
+
+          <div class="form-check" id="grupoPlantillas">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled">
+            <label class="form-check-label" for="flexCheckDisabled">
+              Contingencia judicial
+            </label>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <label for="descripcion" class="form-label">Descripción de la Solicitud (*)</label>
+          <textarea class="form-control" id="descripcion"></textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <label for="nombre" class="form-label">Nombre del Solicitante (*)</label>
+          <input type="text" class="form-control" id="nombre">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <label for="cargo" class="form-label">Cargo del Solicitante (*)</label>
+          <input type="text" class="form-control" id="cargo">
+        </div>
+
+        <div class="col-6">
+          <label for="correo" class="form-label">Email del Solicitante (*)</label>
+          <input type="email" class="form-control" id="correo">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <label for="descripcion" class="form-label">Observación</label>
+          <textarea class="form-control" id="descripcion"></textarea>
+        </div>
+      </div>
+
+      <small class="mt-4">(*) Campos obligatorios</small>
+
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-primary btn-sm">Cancelar</button>
+        <button class="btn btn-primary btn-sm ms-2">Limpiar</button>
+        <button class="btn btn-primary btn-sm ms-2">Guardar</button>
+      </div>
+
+    </form>
+  </div>
+</div>

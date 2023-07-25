@@ -1,0 +1,19 @@
+version: '3'
+services:
+  deploy:
+    image: angulartemplate_img
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    ports:
+      - '1003:80'
+    networks:
+      - angulartemplatenetwork
+networks:
+  angulartemplatenetwork:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet:  172.20.0.0/16

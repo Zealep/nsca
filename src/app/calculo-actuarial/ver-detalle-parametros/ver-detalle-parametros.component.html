@@ -1,0 +1,60 @@
+<div class="container">
+
+
+  <div>
+    <i class="fa-solid fa-user me-2"></i>
+    <span><strong>Solicitud N° 2753</strong></span>
+    <span class="ms-5">Usuario: JBAUTISTA</span>
+  </div>
+
+  <div class="container mt-3">
+    <form>
+
+      <div class="row">
+        <div class="col-6">
+          <label for="fechaSolicitud" class="form-label">Fecha de solicitud (*)</label>
+          <input type="text" class="form-control" id="fechaSolicitud">
+        </div>
+
+        <div class="col-6">
+          <label for="periodo" class="form-label">Periodo de Cálculo (*)</label>
+          <input type="text" class="form-control" id="periodo">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <label for="tipoSolicitud" class="form-label">Tipo de Solicitud (*)</label>
+          <input type="text" class="form-control" id="tipoSolicitud">
+
+        </div>
+
+      </div>
+    </form>
+
+    <div>
+
+      <label for="parametros" class="form-label">Parametros</label>
+
+      <table class="table table-sm table-bordered" id="parametros">
+        <thead>
+          <tr>
+            <th>Régimen</th>
+            <th>Parámetro</th>
+            <th>ID</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr></tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <pagination-controls class="my-pagination" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="p = $event">
+
+    </pagination-controls>
+
+  </div>
+</div>

@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+$primary: #141B4D;
+$secondary: #628786;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary
+);
+
+
+.color-primario{
+  background-image: linear-gradient(to right, #141B4D , #66AFAC);
+  color: white;
+}
+
+
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+body{
+  font-size: 12px;
+}
+
+.form-control, .form-select{
+  border-width: 3px
+}
+.form-control:focus, .form-select:valid:focus{
+  box-shadow: none;
+  border: 3px solid #141B4D
+}
+
+.form-select option:hover{
+  background-color: #141B4D; /* Cambia el color de fondo en el hover */
+  color: #ffffff; /* Cambia el color del texto en el hover */
+}
+
+
+/*
+body{
+  font-family: 'Poppins', sans-serif;
+
+}
+
+
+*/

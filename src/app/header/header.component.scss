@@ -1,0 +1,31 @@
+nav{
+  height: 100%;
+}
+
+.side-nav-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.side-nav-button:hover{
+  background-color: #66AFAC;
+  border-radius: 20%;
+}
+a{
+  text-decoration: none;
+  color: white;
+}
+
+.user-info{
+  width: 100%;
+  height: 35px;
+  background: #E5E5E5;
+
+
+}
+.user-text{
+  color: #212529;
+}
