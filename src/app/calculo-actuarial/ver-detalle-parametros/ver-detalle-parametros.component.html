@@ -2,43 +2,54 @@
 
 
   <div>
-    <i class="fa-solid fa-user me-2"></i>
-    <span><strong>Solicitud N° 2753</strong></span>
+    <img src="./assets/images/icon-user.svg" class="me-2" width="20px" height="20px">
+    <span class="title-form"><strong>Solicitud N° {{solicitud.codSolicitud}}</strong></span>
     <span class="ms-5">Usuario: JBAUTISTA</span>
   </div>
 
   <div class="container mt-3">
-    <form>
 
-      <div class="row">
-        <div class="col-6">
-          <label for="fechaSolicitud" class="form-label">Fecha de solicitud (*)</label>
-          <input type="text" class="form-control" id="fechaSolicitud">
-        </div>
-
-        <div class="col-6">
-          <label for="periodo" class="form-label">Periodo de Cálculo (*)</label>
-          <input type="text" class="form-control" id="periodo">
-        </div>
+    <div class="row">
+      <div class="col-6">
+        <label for="fechaSolicitud" class="form-label">Fecha de solicitud (*)</label>
+        <input type="text" class="form-control" id="fechaSolicitud" value="{{solicitud.fechRecepcion}}" readonly>
       </div>
 
-      <div class="row">
-        <div class="col-6">
-          <label for="tipoSolicitud" class="form-label">Tipo de Solicitud (*)</label>
-          <input type="text" class="form-control" id="tipoSolicitud">
+      <div class="col-6">
+        <label for="periodo" class="form-label">Periodo de Cálculo (*)</label>
+        <input type="text" class="form-control" id="periodo" value="{{solicitud.anhoCalculo}}" readonly>
+      </div>
+    </div>
 
-        </div>
+    <div class="row">
+      <div class="col-6">
+        <label for="tipoSolicitud" class="form-label">Tipo de Solicitud (*)</label>
+        <input type="text" class="form-control" id="tipoSolicitud" value="{{solicitud.desTipoSolicitud}}" readonly>
 
       </div>
-    </form>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <label for="planilla" class="form-label">Planilla</label>
+        <select id="planilla" class="form-select form-select-sm custom-select" [(ngModel)]="selectedOption"
+          (change)="getParametrosSolicitud()">
+          <option value="">Seleccionar</option>
+          <option *ngFor="let p of solicitud.planilla" value="{{p.codTipPla}}">{{p.desTipPla}}</option>
+
+
+        </select> </div>
+    </div>
+
 
     <div>
 
       <label for="parametros" class="form-label">Parametros</label>
 
-      <table class="table table-sm table-bordered" id="parametros">
+      <table class="table table-sm table-bordered" id="table-parametros">
         <thead>
           <tr>
+            <th>Planilla</th>
             <th>Régimen</th>
             <th>Parámetro</th>
             <th>ID</th>
@@ -46,17 +57,28 @@
           </tr>
         </thead>
         <tbody>
-          <tr></tr>
+          <tr *ngFor="let p of parametros.items | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td>{{p.desTipPla}}</td>
+            <td>{{p.desTipoSolicitud}}</td>
+            <td>{{p.desParametro}}</td>
+            <td>{{p.idCodigo}}</td>
+            <td>{{p.valorCampo}}</td>
+          </tr>
         </tbody>
       </table>
 
     </div>
 
-    <pagination-controls class="my-pagination" previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="p = $event">
+    <div class="d-flex justify-content-center mt-3">
 
-    </pagination-controls>
+      <pagination-controls class="my-pagination" previousLabel="Anterior" nextLabel="Siguiente"
+        (pageChange)="p = $event">
 
-    <div class="d-flex justify-content-center">
+      </pagination-controls>
+
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
       <button class="btn btn-primary btn-sm" (click)="cerrar()">Cerrar</button>
       <button class="btn btn-primary btn-sm ms-2" (click)="descargar()">Descargar</button>
       <button class="btn btn-primary btn-sm ms-2" (click)="verMovimientos()">Movimientos</button>

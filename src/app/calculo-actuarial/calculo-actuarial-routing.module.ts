@@ -10,11 +10,11 @@ import { AnularSolicitudComponent } from './anular-solicitud/anular-solicitud.co
 
 const routes: Routes = [
   { path: 'solicitud-bandeja', component: BandejaCalculoActuarialComponent },
-  { path: 'ver-detalle-solicitud', component: VerDetalleSolicitudComponent },
-  { path: 'ver-detalle-parametros', component: VerDetalleParametrosComponent },
-  { path: 'ver-detalle-movimientos', component: VerDetalleMovimientosComponent },
-  { path: 'anular-planillas', component: AnularPlanillasComponent },
-  { path: 'anular-solicitud', component: AnularSolicitudComponent }
+  { path: 'ver-detalle-solicitud/:codSolicitud', component: VerDetalleSolicitudComponent },
+  { path: 'ver-detalle-parametros/:codSolicitud', component: VerDetalleParametrosComponent },
+  { path: 'ver-detalle-movimientos/:codSolicitud', component: VerDetalleMovimientosComponent },
+  { path: 'anular-planillas/:codSolicitud', component: AnularPlanillasComponent },
+  { path: 'anular-solicitud/:codSolicitud', component: AnularSolicitudComponent }
 
 
 ];

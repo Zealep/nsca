@@ -1,98 +1,86 @@
 <div class="container">
 
-    <div>
-      <i class="fa-solid fa-user me-2"></i>
-      <span><strong>Solicitud N° 2753</strong></span>
-      <span class="ms-5">Usuario: JBAUTISTA</span>
+  <div>
+    <img src="./assets/images/icon-user.svg" class="me-2" width="20px" height="20px">
+    <span class="title-form"><strong>Solicitud N° {{solicitud.codSolicitud}}</strong></span>
+    <span class="ms-5">Usuario: JBAUTISTA</span>
+  </div>
+
+  <div class="container mt-3">
+
+
+    <div class="row">
+      <div class="col-6">
+        <label for="fechaSolicitud" class="form-label">Fecha de solicitud (*)</label>
+        <input type="text" class="form-control" id="fechaSolicitud" value="{{solicitud.fechRecepcion}}" readonly>
+      </div>
+
+      <div class="col-6">
+        <label for="periodo" class="form-label">Periodo de Cálculo (*)</label>
+        <input type="text" class="form-control" id="periodo" value="{{solicitud.anhoCalculo}}" readonly>
+      </div>
     </div>
-  
-    <div class="container mt-3">
-      <form>
-  
-        <div class="row">
-          <div class="col-6">
-            <label for="fechaSolicitud" class="form-label">Fecha de solicitud (*)</label>
-            <input type="text" class="form-control" id="fechaSolicitud">
-          </div>
-  
-          <div class="col-6">
-            <label for="periodo" class="form-label">Periodo de Cálculo (*)</label>
-            <input type="text" class="form-control" id="periodo">
-          </div>
-        </div>
-  
-        <div class="row">
-          <div class="col-6">
-            <label for="tipoSolicitud" class="form-label">Tipo de Solicitud (*)</label>
-            <input type="text" class="form-control" id="tipoSolicitud">
-  
-          </div>
-  
-          <div class="col-6">
-            <label for="grupoPlantillas" class="form-label">Plantillas</label>
-            <table class="table table-sm table-bordered" id="grupoPlantillas">
-              <thead>
-                <tr>
-                  <th>Planilla</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Pensionistas</td>
-                  <td>Planilla aprobada</td>
-                </tr>
-                <tr>
-                  <td>Contingencia administrativa</td>
-                  <td>Planilla aprobada</td>
-                </tr>
-                <tr>
-                  <td>Afiliados</td>
-                  <td>Planilla aprobada</td>
-                </tr>
-                <tr>
-                  <td>Contingencia judicial</td>
-                  <td>Planilla aprobada</td>
-                </tr>
-              </tbody>
-  
-            </table>
-  
-          </div>
-  
-        </div>
-  
-        <div class="row">
-          <div class="col-12">
-            <label for="nombre" class="form-label">Nombre del Solicitante (*)</label>
-            <input type="text" class="form-control" id="nombre">
-          </div>
-        </div>
-  
-        <div class="row">
-          <div class="col-6">
-            <label for="cargo" class="form-label">Cargo del Solicitante (*)</label>
-            <input type="text" class="form-control" id="cargo">
-          </div>
-  
-          <div class="col-6">
-            <label for="correo" class="form-label">Email del Solicitante (*)</label>
-            <input type="email" class="form-control" id="correo">
-          </div>
-        </div>
-  
-        <div class="row">
-          <div class="col-12">
-            <label for="descripcion" class="form-label">Observación</label>
-            <textarea class="form-control" id="descripcion"></textarea>
-          </div>
-        </div>
-  
-        <div class="d-flex justify-content-center">
-           <button class="btn btn-primary btn-sm" (click)="anular()">Anular</button>
-          <button class="btn btn-primary btn-sm ms-2" (click)="cerrar()">Cerrar</button>
-        </div>
-  
-      </form>
+
+    <div class="row">
+      <div class="col-6">
+        <label for="tipoSolicitud" class="form-label">Tipo de Solicitud (*)</label>
+        <input type="text" class="form-control" id="tipoSolicitud" value="{{solicitud.desTipoSolicitud}}" readonly>
+
+      </div>
+
+      <div class="col-6">
+        <label for="grupoPlanillas" class="form-label">Planillas</label>
+        <table class="table table-sm table-bordered" id="grupoPlanillas">
+          <thead>
+            <tr>
+              <th>Planilla</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of solicitud.planilla">
+              <td>{{p.desTipPla}}</td>
+              <td>{{p.desEst}}</td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
     </div>
-  
+
+    <div class="row">
+      <div class="col-12">
+        <label for="nombre" class="form-label">Nombre del Solicitante (*)</label>
+        <input type="text" class="form-control" id="nombre" value="{{solicitud.nombSolicitante}}" readonly>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <label for="cargo" class="form-label">Cargo del Solicitante (*)</label>
+        <input type="text" class="form-control" id="cargo" value="{{solicitud.cargSolicitante}}" readonly>
+      </div>
+
+      <div class="col-6">
+        <label for="correo" class="form-label">Email del Solicitante (*)</label>
+        <input type="email" class="form-control" id="correo" value="{{solicitud.mailSolicitante}}" readonly>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <label for="descripcion" class="form-label">Observación</label>
+        <textarea class="form-control" id="descripcion" value="{{solicitud.observacion}}" readonly></textarea>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+      <button class="btn btn-primary btn-sm" (click)="anular()">Anular</button>
+      <button class="btn btn-primary btn-sm ms-2" (click)="cerrar()">Cerrar</button>
+    </div>
+
+
+  </div>

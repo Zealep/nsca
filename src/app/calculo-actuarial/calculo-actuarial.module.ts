@@ -1,7 +1,6 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es-PE';
-
 import { CalculoActuarialRoutingModule } from './calculo-actuarial-routing.module';
 import { BandejaCalculoActuarialComponent } from './bandeja-calculo-actuarial/bandeja-calculo-actuarial.component';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -11,6 +10,10 @@ import { VerDetalleParametrosComponent } from './ver-detalle-parametros/ver-deta
 import { VerDetalleMovimientosComponent } from './ver-detalle-movimientos/ver-detalle-movimientos.component';
 import { AnularPlanillasComponent } from './anular-planillas/anular-planillas.component';
 import { AnularSolicitudComponent } from './anular-solicitud/anular-solicitud.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppModule } from '../app.module';
+import { SharedModule } from '../shared/shared.module';
+import { NgbToast } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -18,7 +21,11 @@ import { AnularSolicitudComponent } from './anular-solicitud/anular-solicitud.co
   imports: [
     CommonModule,
     CalculoActuarialRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ReactiveFormsModule,
+    SharedModule,
+    FormsModule,
+    NgbToast
   ],
 })
 export class CalculoActuarialModule { }

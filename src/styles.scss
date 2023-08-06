@@ -3,10 +3,16 @@
 
 $primary: #141B4D;
 $secondary: #628786;
+$success : #198754;
+$danger : #dc3545;
+$warning : #ffc107;
 
 $theme-colors: (
   "primary": $primary,
-  "secondary": $secondary
+  "secondary": $secondary,
+  "success": $success,
+  "danger": $danger,
+  "warning": $warning
 );
 
 
@@ -15,8 +21,6 @@ $theme-colors: (
   color: white;
 }
 
-
-
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 body{
@@ -24,7 +28,8 @@ body{
 }
 
 .form-control, .form-select{
-  border-width: 3px
+  border-width: 3px;
+  font-size: 12px;
 }
 .form-control:focus, .form-select:valid:focus{
   box-shadow: none;
@@ -36,6 +41,24 @@ body{
   color: #ffffff; /* Cambia el color del texto en el hover */
 }
 
+.form-label{
+  color: #8E9089;
+}
+.title-form{
+  color:#141B4D;
+}
+
+.table th {
+  background-color: #66AFAC;
+  color:white
+}
+
+.my-pagination .ngx-pagination .current{
+  padding: 0.1875rem 0.625rem;
+  background: #141B4D;
+  color: #fefefe;
+  cursor: default;
+}
 
 /*
 body{

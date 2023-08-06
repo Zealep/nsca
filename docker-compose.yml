@@ -1,19 +1,19 @@
 version: '3'
 services:
   deploy:
-    image: angulartemplate_img
+    image: nsca_img
     build:
       context: .
       dockerfile: ./Dockerfile
     restart: unless-stopped
     ports:
-      - '1003:80'
+      - '1033:80'
     networks:
-      - angulartemplatenetwork
+      - nscanetwork
 networks:
-  angulartemplatenetwork:
+  nscanetwork:
     driver: bridge
     ipam:
       driver: default
       config:
-        - subnet:  172.20.0.0/16
+        - subnet:  172.30.0.0/16

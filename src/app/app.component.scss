@@ -47,3 +47,13 @@ app-side-nav{
   width: calc(100% - 250px);
   left: 250px;
 }
+
+/* PRUEBA* /
+
+/************************************************ Loadin Spinner Start  ************************************************/
+.cursor-loader {
+  cursor: wait;
+  * {
+    cursor: wait !important;
+  }
+}
