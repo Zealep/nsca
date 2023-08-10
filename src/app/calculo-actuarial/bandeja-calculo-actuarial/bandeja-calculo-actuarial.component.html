@@ -5,12 +5,12 @@
       <label for="tipoSolicitud" class="form-label">Tipo de Solicitud</label>
       <select id="tipoSolicitud" class="form-select form-select-sm custom-select" [(ngModel)]="tipoSolicitud">
         <option value="">Seleccionar</option>
-        <option *ngFor="let t of listaParametros.lstParam" value="{{t.codParametro}}">{{t.desParametro}}</option>
+        <option *ngFor="let t of listaParametros.items" value="{{t.idCod}}">{{t.vlCamp}}</option>
       </select> </div>
     <div class="col-auto">
       <label for="año" class="form-label">Año</label>
-      <input type="text" class="form-control form-control-sm" id="año" maxlength="6" placeholder="YYYYMM"
-        [(ngModel)]="periodo">
+      <input type="text" (keypress)="soloNumeros($event)" class="form-control form-control-sm" id="año" maxlength="6"
+        placeholder="YYYY ó YYYYMM" [(ngModel)]="periodo">
     </div>
     <div class="col-auto">
       <button class="btn btn-primary text-white mt-4 btn-sm" (click)="getSearchBandeja()">Buscar</button>
@@ -25,7 +25,7 @@
         <tr>
           <th>Número</th>
           <th>Solicitud</th>
-          <th>Periodo</th>
+          <th sortable="anhoCalculo" (sort)="onSort($event)">Periodo</th>
           <th>F.Recepción</th>
           <th>F.Ingreso</th>
           <th>Estado</th>
@@ -36,13 +36,13 @@
       </thead>
       <tbody>
         <tr
-          *ngFor="let s of bandeja.items  | paginate: { id: 'server', itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }">
+          *ngFor="let s of sortBandeja.items  | paginate: { id: 'server', itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }">
           <td>{{s.idSolicitud}}</td>
-          <td>{{s.tipoSolicitud}}</td>
+          <td>{{s.desTipoSolicitud}}</td>
           <td>{{s.anhoCalculo}}</td>
           <td>{{s.fechRecepcion}}</td>
           <td>{{s.fechCrea}}</td>
-          <td>{{s.descEstado}}</td>
+          <td>{{s.descEstadoSolicitud}}</td>
           <td class="text-center"><button class="btn btn-primary btn-sm" (click)="verDetalle(s.idSolicitud)">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>

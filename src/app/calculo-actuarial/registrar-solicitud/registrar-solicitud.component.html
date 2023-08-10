@@ -10,16 +10,24 @@
   <div class="container mt-3">
     <form [formGroup]="form">
 
+      <div *ngIf="invalid" class="alert alert-danger alert-dismissible fade show" role="alert">
+        Para este tipo de solicitud el mes del periodo de calculo deberia ser diciembre(12)
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
       <div class="row">
         <div class="col-6">
           <label for="fechaSolicitud" class="form-label">Fecha de solicitud (*)</label>
-          <input type="date" value="{{fechaActual}}" class="form-control" id="fechaSolicitud" readonly>
+          <input type="date" value="{{fechaActual}}" class="form-control" id="fechaSolicitud" disabled readonly>
         </div>
 
         <div class="col-6">
           <label for="periodoCalculo" class="form-label">Periodo de Cálculo (*)</label>
-          <input type="text" maxlength="6" formControlName="periodoCalculo" class="form-control" id="periodoCalculo"
-            placeholder="AAAAMM">
+          <input type="text" maxlength="6" (keypress)="soloNumeros($event)" formControlName="periodoCalculo"
+            class="form-control" id="periodoCalculo" placeholder="AAAAMM">
+          <p style="color: red;" *ngIf="form.get('periodoCalculo')!.invalid && form.get('periodoCalculo')!.touched">
+            {{ getValidationErrorMessage() }}
+          </p>
         </div>
       </div>
 
@@ -29,7 +37,7 @@
           <select id="tipoSolicitud" formControlName="tipoSolicitud" class="form-select form-select-sm custom-select"
             (change)="selectTipoSolicitud()">
             <option value="">Seleccionar</option>
-            <option *ngFor="let t of listaParametros.lstParam" value="{{t.codParametro}}">{{t.desParametro}}</option>
+            <option *ngFor="let t of listaParametros.items" value="{{t.idCod}}">{{t.vlCamp}}</option>
           </select> </div>
 
         <div class="col-6">
@@ -69,33 +77,35 @@
       <div class="row">
         <div class="col-12">
           <label for="descripcion" class="form-label">Descripción de la Solicitud (*)</label>
-          <textarea class="form-control" formControlName="descripcion" id="descripcion"></textarea>
+          <textarea class="form-control" formControlName="descripcion" id="descripcion" maxlength="100"></textarea>
         </div>
       </div>
 
       <div class="row">
         <div class="col-12">
           <label for="nombre" class="form-label">Nombre del Solicitante (*)</label>
-          <input type="text" class="form-control" formControlName="nombre" id="nombre">
+          <input type="text" class="form-control" formControlName="nombre" id="nombre" maxlength="100">
         </div>
       </div>
 
       <div class="row">
         <div class="col-6">
           <label for="cargo" class="form-label">Cargo del Solicitante (*)</label>
-          <input type="text" class="form-control" formControlName="cargo" id="cargo">
+          <input type="text" class="form-control" formControlName="cargo" id="cargo" maxlength="100">
         </div>
 
         <div class="col-6">
           <label for="correo" class="form-label">Email del Solicitante (*)</label>
-          <input type="email" class="form-control" formControlName="correo" id="correo">
+          <input type="email" class="form-control" formControlName="correo" id="correo" maxlength="100">
         </div>
       </div>
 
       <div class="row">
         <div class="col-12">
           <label for="observacion" class="form-label">Observación</label>
-          <textarea class="form-control" id="observacion" formControlName="observacion"></textarea>
+          <textarea class="form-control" id="observacion" formControlName="observacion" maxlength="300"
+            (input)="onTextareaInput($event)"></textarea>
+          <div class="form-text">{{ remainingChars }} caracteres restantes</div>
         </div>
       </div>
 

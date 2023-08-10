@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'https://demo4873478.mockable.io/calculoactuarial/e',
+  host: 'http://172.31.31.192:1004/v1/calculoactuarial',
 };
 
 /*

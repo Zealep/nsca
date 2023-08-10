@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Solicitud } from 'src/app/interfaces/solicitud';
 import { SolicPlaniMov } from 'src/app/interfaces/solicitud-plani-mov';
@@ -6,6 +6,9 @@ import { SpinnerOverlayService } from 'src/app/services/overlay.service';
 import { SolicitudService } from 'src/app/services/solicitud.service';
 import { catchError, EMPTY } from 'rxjs';
 import { ToastService } from 'src/app/services/toast.service';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { VerDetalleParametrosComponent } from '../ver-detalle-parametros/ver-detalle-parametros.component';
+import { VerDetalleMovimientosComponent } from '../ver-detalle-movimientos/ver-detalle-movimientos.component';
 
 @Component({
   selector: 'app-ver-detalle-solicitud',
@@ -14,7 +17,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class VerDetalleSolicitudComponent implements OnInit {
 
-  codSolicitud!: string
+  @Input() codSolicitud!: string
 
   solicitud: SolicPlaniMov =
     {
@@ -38,12 +41,13 @@ export class VerDetalleSolicitudComponent implements OnInit {
 
   constructor(private router: Router,
     private route: ActivatedRoute,
+    private activeModal: NgbActiveModal,
+    private modal: NgbModal,
     private solicitudService: SolicitudService,
     private spinnerService: SpinnerOverlayService,
     private toastService: ToastService) { }
 
   ngOnInit() {
-    this.codSolicitud = this.route.snapshot.paramMap.get('codSolicitud')!;
     this.getSolicitudPlanillaMovimiento()
   }
 
@@ -62,18 +66,22 @@ export class VerDetalleSolicitudComponent implements OnInit {
   }
 
   cerrar() {
-    this.router.navigate(['/calculo-actuarial/solicitud-bandeja'])
+    this.activeModal.close()
 
   }
 
   verDetalleParametro() {
-    this.router.navigate(['/calculo-actuarial/ver-detalle-parametros', this.codSolicitud])
-
+    const modalRef = this.modal.open(VerDetalleParametrosComponent);
+    modalRef.componentInstance.codSolicitud = this.codSolicitud
+    modalRef.closed.subscribe(x => {
+    })
   }
 
   verDetalleMovimiento() {
-    this.router.navigate(['/calculo-actuarial/ver-detalle-movimientos', this.codSolicitud])
-
+    const modalRef = this.modal.open(VerDetalleMovimientosComponent);
+    modalRef.componentInstance.codSolicitud = this.codSolicitud
+    modalRef.closed.subscribe(x => {
+    })
   }
 
 }

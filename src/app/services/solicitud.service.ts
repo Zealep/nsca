@@ -25,7 +25,10 @@ export class SolicitudService {
   getBandejaSolicitud(tipoSolicitud: string, periodo: string, numPag: number, numRegPorPag: number) {
     let params = new HttpParams()
     params = params.append("tipoSolicitud", tipoSolicitud)
-    params = params.append("periodo", periodo)
+    if (periodo !== '') {
+      params = params.append("periodo", periodo)
+    }
+
     params = params.append("numPag", numPag)
     params = params.append("numRegPorPag", numRegPorPag)
 
@@ -45,11 +48,13 @@ export class SolicitudService {
       );
   }
 
-  getParametrosSolicitud(codSolicitud: string, codPlanilla: string, numPag: string, numRegPorPag: string) {
+  getParametrosSolicitud(codSolicitud: string, codPlanilla: string, numPag: number, numRegPorPag: number) {
 
     let params = new HttpParams()
     params = params.append("codSolicitud", codSolicitud)
-    params = params.append("codPlanilla", codPlanilla)
+    if (codPlanilla !== '0') {
+      params = params.append("codPlanilla", codPlanilla)
+    }
     params = params.append("numPag", numPag)
     params = params.append("numRegPorPag", numRegPorPag)
 
@@ -87,9 +92,9 @@ export class SolicitudService {
 
   getTiposDeSolicitud() {
     let params = new HttpParams()
-    params = params.append("codParametro", "TIPOSOLI")
+    params = params.append("codParametro", "TIPOSOLIN")
 
-    return this.http.get<ParametroList[]>(`${this.url}/consulta/parametros`,
+    return this.http.get<ParametroList>(`${this.url}/consulta/parametros`,
       {
         params: params
       }
@@ -133,7 +138,7 @@ export class SolicitudService {
       }
       // Devolver el mensaje de error como string
     }
-    return throwError(error.error.msg || 'Algo salió mal. Por favor, inténtalo de nuevo más tarde.')
+    return throwError(error.error.errors ? error.error.errors[0].desError : 'Algo salió mal en el servidor. Por favor, inténtalo de nuevo más tarde.');
   }
 
 

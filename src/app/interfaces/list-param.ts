@@ -1,5 +1,5 @@
 export interface LstParam {
-  codParametro: string
-  desParametro: string
-  idCampo: string
+  idCod: string
+  vlCamp: string
+  idCamp: string
 }

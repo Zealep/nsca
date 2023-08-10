@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogModel } from 'src/app/shared/models/confirm-dialog-model';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { SolicitudService } from 'src/app/services/solicitud.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerOverlayService } from 'src/app/services/overlay.service';
 import { SolicPlaniMov } from 'src/app/interfaces/solicitud-plani-mov';
 import { catchError, EMPTY } from 'rxjs';
@@ -18,7 +18,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class AnularSolicitudComponent {
 
-  codSolicitud!: string
+  @Input() codSolicitud!: string
 
   solicitud: SolicPlaniMov =
     {
@@ -43,12 +43,12 @@ export class AnularSolicitudComponent {
   constructor(private router: Router,
     private modal: NgbModal,
     private route: ActivatedRoute,
+    private activeModal: NgbActiveModal,
     private solicitudService: SolicitudService,
     private spinnerService: SpinnerOverlayService,
     private toastService: ToastService) { }
 
   ngOnInit() {
-    this.codSolicitud = this.route.snapshot.paramMap.get('codSolicitud')!;
     this.getSolicitudPlanillaMovimiento()
   }
 
@@ -67,7 +67,7 @@ export class AnularSolicitudComponent {
   }
 
   cerrar() {
-    this.router.navigate(['/calculo-actuarial/solicitud-bandeja'])
+    this.activeModal.close()
   }
 
   anular() {
@@ -84,14 +84,19 @@ export class AnularSolicitudComponent {
   }
 
   requestEliminar() {
+
+    this.spinnerService.show()
+
     this.solicitudService.anularSolicitud(this.solicitud.codSolicitud)
       .pipe(catchError(error => {
+        this.spinnerService.hide()
         this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
         return EMPTY
       }))
       .subscribe((res: any) => {
+        this.spinnerService.hide()
         if (res.indEliminacion === '1')
-          this.router.navigate(['/calculo-actuarial/solicitud-bandeja'])
+          this.activeModal.close()
         this.toastService.show('Se elimino la solicitud correctamente', { classname: 'bg-success text-white', delay: 3000, icon: 'check' })
       });
 

@@ -7,20 +7,25 @@ import { VerDetalleParametrosComponent } from './ver-detalle-parametros/ver-deta
 import { VerDetalleMovimientosComponent } from './ver-detalle-movimientos/ver-detalle-movimientos.component';
 import { AnularPlanillasComponent } from './anular-planillas/anular-planillas.component';
 import { AnularSolicitudComponent } from './anular-solicitud/anular-solicitud.component';
+import { SortableHeaderDirective } from './sortable-header.directive';
 
 const routes: Routes = [
   { path: 'solicitud-bandeja', component: BandejaCalculoActuarialComponent },
+  /*
   { path: 'ver-detalle-solicitud/:codSolicitud', component: VerDetalleSolicitudComponent },
   { path: 'ver-detalle-parametros/:codSolicitud', component: VerDetalleParametrosComponent },
   { path: 'ver-detalle-movimientos/:codSolicitud', component: VerDetalleMovimientosComponent },
   { path: 'anular-planillas/:codSolicitud', component: AnularPlanillasComponent },
   { path: 'anular-solicitud/:codSolicitud', component: AnularSolicitudComponent }
-
+  */
 
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  declarations: [
+
+  ]
 })
 export class CalculoActuarialRoutingModule { }

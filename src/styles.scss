@@ -17,7 +17,7 @@ $theme-colors: (
 
 
 .color-primario{
-  background-image: linear-gradient(to right, #141B4D , #66AFAC);
+  background: linear-gradient(90deg, #17194B 14.52%, #59AEAB 85.45%);
   color: white;
 }
 
@@ -68,3 +68,7 @@ body{
 
 
 */
+
+.cdk-overlay-container {
+  z-index: 9000;
+}

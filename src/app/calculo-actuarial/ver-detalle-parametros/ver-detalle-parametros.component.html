@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container p-3">
 
 
   <div>
@@ -12,19 +12,21 @@
     <div class="row">
       <div class="col-6">
         <label for="fechaSolicitud" class="form-label">Fecha de solicitud (*)</label>
-        <input type="text" class="form-control" id="fechaSolicitud" value="{{solicitud.fechRecepcion}}" readonly>
+        <input type="text" class="form-control" id="fechaSolicitud" value="{{solicitud.fechRecepcion}}" disabled
+          readonly>
       </div>
 
       <div class="col-6">
         <label for="periodo" class="form-label">Periodo de Cálculo (*)</label>
-        <input type="text" class="form-control" id="periodo" value="{{solicitud.anhoCalculo}}" readonly>
+        <input type="text" class="form-control" id="periodo" value="{{solicitud.anhoCalculo}}" disabled readonly>
       </div>
     </div>
 
     <div class="row">
       <div class="col-6">
         <label for="tipoSolicitud" class="form-label">Tipo de Solicitud (*)</label>
-        <input type="text" class="form-control" id="tipoSolicitud" value="{{solicitud.desTipoSolicitud}}" readonly>
+        <input type="text" class="form-control" id="tipoSolicitud" value="{{solicitud.desTipoSolicitud}}" disabled
+          readonly>
 
       </div>
     </div>
@@ -35,6 +37,7 @@
         <select id="planilla" class="form-select form-select-sm custom-select" [(ngModel)]="selectedOption"
           (change)="getParametrosSolicitud()">
           <option value="">Seleccionar</option>
+          <option value="0">TODOS</option>
           <option *ngFor="let p of solicitud.planilla" value="{{p.codTipPla}}">{{p.desTipPla}}</option>
 
 
@@ -57,7 +60,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let p of parametros.items | paginate: { itemsPerPage: 5, currentPage: p }">
+          <tr
+            *ngFor="let p of parametros.items | paginate: { id: 'server', itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }">
             <td>{{p.desTipPla}}</td>
             <td>{{p.desTipoSolicitud}}</td>
             <td>{{p.desParametro}}</td>
@@ -72,7 +76,7 @@
     <div class="d-flex justify-content-center mt-3">
 
       <pagination-controls class="my-pagination" previousLabel="Anterior" nextLabel="Siguiente"
-        (pageChange)="p = $event">
+        (pageChange)="onPageChange($event)" id="server">
 
       </pagination-controls>
 
@@ -81,7 +85,6 @@
     <div class="d-flex justify-content-center mt-4">
       <button class="btn btn-primary btn-sm" (click)="cerrar()">Cerrar</button>
       <button class="btn btn-primary btn-sm ms-2" (click)="descargar()">Descargar</button>
-      <button class="btn btn-primary btn-sm ms-2" (click)="verMovimientos()">Movimientos</button>
     </div>
 
   </div>

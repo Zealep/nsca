@@ -10,7 +10,8 @@ export class SpinnerOverlayService {
 
   private overlayRef?: OverlayRef = undefined;
 
-  constructor(private overlay: Overlay) { }
+  constructor(private overlay: Overlay,
+  ) { }
 
   public show(): void {
     // Hack avoiding `ExpressionChangedAfterItHasBeenCheckedError` error
@@ -22,6 +23,7 @@ export class SpinnerOverlayService {
           .centerHorizontally()
           .centerVertically(),
         hasBackdrop: true,
+
       });
       this.overlayRef.attach(new ComponentPortal(ProgressSpinnerComponent));
     });

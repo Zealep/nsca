@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EMPTY, catchError } from 'rxjs';
 import { SolicPlaniMov } from 'src/app/interfaces/solicitud-plani-mov';
 import { SpinnerOverlayService } from 'src/app/services/overlay.service';
@@ -15,7 +15,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 })
 export class AnularPlanillasComponent {
 
-  codSolicitud!: string
+  @Input() codSolicitud!: string
 
   solicitud: SolicPlaniMov =
     {
@@ -41,12 +41,12 @@ export class AnularPlanillasComponent {
   constructor(private router: Router,
     private modal: NgbModal,
     private route: ActivatedRoute,
+    private activeModal: NgbActiveModal,
     private solicitudService: SolicitudService,
     private spinnerService: SpinnerOverlayService,
     private toastService: ToastService) { }
 
   ngOnInit() {
-    this.codSolicitud = this.route.snapshot.paramMap.get('codSolicitud')!;
     this.getSolicitudPlanillaMovimiento()
   }
 
@@ -65,7 +65,7 @@ export class AnularPlanillasComponent {
   }
 
   cerrar() {
-    this.router.navigate(['/calculo-actuarial/solicitud-bandeja'])
+    this.activeModal.close()
 
   }
 
@@ -75,7 +75,6 @@ export class AnularPlanillasComponent {
 
     modalRef.closed.subscribe(result => {
       if (result) {
-        console.log('eliminar');
         this.requestEliminar(idPlanilla);
       }
     })
@@ -83,12 +82,16 @@ export class AnularPlanillasComponent {
 
   requestEliminar(codPlanilla: string) {
 
+    this.spinnerService.show()
+
     this.solicitudService.anularPlanilla(this.solicitud.codSolicitud, codPlanilla)
       .pipe(catchError(error => {
+        this.spinnerService.hide()
         this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
         return EMPTY
       }))
       .subscribe((res: any) => {
+        this.spinnerService.hide()
         if (res.indEliminacion === '1')
           this.toastService.show('Se elimino la planilla correctamente', { classname: 'bg-success text-white', delay: 3000, icon: 'check' })
         this.getSolicitudPlanillaMovimiento()

@@ -1,3 +1,4 @@
+/*
 .center {
   position: absolute;
   top: 50%;
@@ -18,5 +19,11 @@ position:   fixed;
 }
 
 :host {
-  z-index: 9999; /* Puedes ajustar este valor según tus necesidades */
+  z-index: 9999;  Puedes ajustar este valor según tus necesidades
+}
+*/
+
+.my-overlay-container {
+
+  z-index: 1056; /* Un valor mayor que el z-index del modal Bootstrap */
 }

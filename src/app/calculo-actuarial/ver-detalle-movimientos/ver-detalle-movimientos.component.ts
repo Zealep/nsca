@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SolicPlaniMov } from 'src/app/interfaces/solicitud-plani-mov';
 import { SpinnerOverlayService } from 'src/app/services/overlay.service';
@@ -6,6 +6,7 @@ import { SolicitudService } from 'src/app/services/solicitud.service';
 import * as XLSX from 'xlsx';
 import { catchError, EMPTY } from 'rxjs';
 import { ToastService } from 'src/app/services/toast.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-ver-detalle-movimientos',
@@ -15,7 +16,7 @@ import { ToastService } from 'src/app/services/toast.service';
 export class VerDetalleMovimientosComponent {
   p: number = 1;
 
-  codSolicitud!: string
+  @Input() codSolicitud!: string
 
   solicitud: SolicPlaniMov =
     {
@@ -39,12 +40,12 @@ export class VerDetalleMovimientosComponent {
 
   constructor(private router: Router,
     private route: ActivatedRoute,
+    private activeModal: NgbActiveModal,
     private spinnerService: SpinnerOverlayService,
     private solicitudService: SolicitudService,
     private toastService: ToastService) { }
 
   ngOnInit() {
-    this.codSolicitud = this.route.snapshot.paramMap.get('codSolicitud')!;
     this.getSolicitudPlanillaMovimiento()
   }
 
@@ -63,8 +64,7 @@ export class VerDetalleMovimientosComponent {
   }
 
   cerrar() {
-    this.router.navigate(['/calculo-actuarial/solicitud-bandeja'])
-
+    this.activeModal.close()
   }
 
   descargar() {
@@ -100,7 +100,4 @@ export class VerDetalleMovimientosComponent {
 
   }
 
-  verParametros() {
-    this.router.navigate(['/calculo-actuarial/ver-detalle-parametros', this.codSolicitud])
-  }
 }

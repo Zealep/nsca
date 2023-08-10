@@ -4,7 +4,9 @@ export interface BandejaSolicitud {
   anhoCalculo: string
   fechRecepcion: string
   fechCrea: string
+  estadoSolicitud: string
   tipoSolicitud: string
-  estado: string
-  descEstado: string
+  desTipoSolicitud: string
+  rowNum: string
+  descEstadoSolicitud: string
 }

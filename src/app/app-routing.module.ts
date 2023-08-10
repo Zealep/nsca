@@ -2,12 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { CalculoActuarialModule } from './calculo-actuarial/calculo-actuarial.module';
 import { LoginComponent } from './login/login.component';
-import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: ProgressSpinnerComponent
+    component: LoginComponent
   },
   {
     path: 'calculo-actuarial', loadChildren: () =>

@@ -10,4 +10,6 @@ export interface Solicitud {
   indActivos: string
   indContAdm: string
   indContJud: string
+  idUsuacrea: string
+  ipUsuacrea: string
 }

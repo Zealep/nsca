@@ -1,0 +1,18 @@
+.background-style {
+  width: 100%; /* Ancho al 100% del contenedor */
+  height: 50vh; /* Altura al 50% del viewport height */
+  background: linear-gradient(90deg, #17194B 14.52%, #59AEAB 85.45%);
+  border-bottom-left-radius: 50% 100px; /* Radio circular en la esquina inferior izquierda */
+  border-bottom-right-radius: 50% 100px;
+}
+
+/* @media query para dispositivos pequeños */
+@media (max-width: 768px) {
+  .background-style {
+    height: 100vh; /* Altura al 100% del viewport height */
+  }
+}
+
+.card-bg{
+  background-color: white;
+}

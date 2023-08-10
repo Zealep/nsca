@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container p-3">
 
   <div>
     <img src="./assets/images/icon-user.svg" class="me-2" width="20px" height="20px">
@@ -12,23 +12,29 @@
     <div class="row">
       <div class="col-6">
         <label for="fechaSolicitud" class="form-label">Fecha de solicitud (*)</label>
-        <input type="text" class="form-control" id="fechaSolicitud" value="{{solicitud.fechRecepcion}}" readonly>
+        <input type="text" class="form-control" id="fechaSolicitud" value="{{solicitud.fechRecepcion}}" disabled
+          readonly>
       </div>
 
       <div class="col-6">
         <label for="periodo" class="form-label">Periodo de Cálculo (*)</label>
-        <input type="text" class="form-control" id="periodo" value="{{solicitud.anhoCalculo}}" readonly>
+        <input type="text" class="form-control" id="periodo" value="{{solicitud.anhoCalculo}}" disabled readonly>
       </div>
     </div>
 
     <div class="row">
       <div class="col-6">
         <label for="tipoSolicitud" class="form-label">Tipo de Solicitud (*)</label>
-        <input type="text" class="form-control" id="tipoSolicitud" value="{{solicitud.desTipoSolicitud}}" readonly>
+        <input type="text" class="form-control" id="tipoSolicitud" value="{{solicitud.desTipoSolicitud}}" disabled
+          readonly>
 
       </div>
 
-      <div class="col-6">
+    </div>
+
+    <div class="row">
+
+      <div class="col-12">
         <label for="grupoPlanillas" class="form-label">Planillas</label>
         <table class="table table-sm table-bordered" id="grupoPlanillas">
           <thead>
@@ -48,32 +54,32 @@
         </table>
 
       </div>
-
     </div>
+
 
     <div class="row">
       <div class="col-12">
         <label for="nombre" class="form-label">Nombre del Solicitante (*)</label>
-        <input type="text" class="form-control" id="nombre" value="{{solicitud.nombSolicitante}}" readonly>
+        <input type="text" class="form-control" id="nombre" value="{{solicitud.nombSolicitante}}" disabled readonly>
       </div>
     </div>
 
     <div class="row">
       <div class="col-6">
         <label for="cargo" class="form-label">Cargo del Solicitante (*)</label>
-        <input type="text" class="form-control" id="cargo" value="{{solicitud.cargSolicitante}}" readonly>
+        <input type="text" class="form-control" id="cargo" value="{{solicitud.cargSolicitante}}" disabled readonly>
       </div>
 
       <div class="col-6">
         <label for="correo" class="form-label">Email del Solicitante (*)</label>
-        <input type="email" class="form-control" id="correo" value="{{solicitud.mailSolicitante}}" readonly>
+        <input type="email" class="form-control" id="correo" value="{{solicitud.mailSolicitante}}" disabled readonly>
       </div>
     </div>
 
     <div class="row">
       <div class="col-12">
         <label for="descripcion" class="form-label">Observación</label>
-        <textarea class="form-control" id="descripcion" value="{{solicitud.observacion}}" readonly></textarea>
+        <textarea class="form-control" id="descripcion" value="{{solicitud.observacion}}" disabled readonly></textarea>
       </div>
     </div>
 

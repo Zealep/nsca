@@ -14,10 +14,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppModule } from '../app.module';
 import { SharedModule } from '../shared/shared.module';
 import { NgbToast } from '@ng-bootstrap/ng-bootstrap';
+import { CargaInformacionDiecinueveComponent } from './carga-informacion-diecinueve/carga-informacion-diecinueve.component';
+import { SortableHeaderDirective } from './sortable-header.directive';
 
 
 @NgModule({
-  declarations: [BandejaCalculoActuarialComponent, RegistrarSolicitudComponent, VerDetalleSolicitudComponent, VerDetalleParametrosComponent, VerDetalleMovimientosComponent, AnularPlanillasComponent, AnularSolicitudComponent],
+  declarations: [BandejaCalculoActuarialComponent, RegistrarSolicitudComponent, VerDetalleSolicitudComponent, VerDetalleParametrosComponent, VerDetalleMovimientosComponent, AnularPlanillasComponent, AnularSolicitudComponent, CargaInformacionDiecinueveComponent,
+    SortableHeaderDirective],
   imports: [
     CommonModule,
     CalculoActuarialRoutingModule,

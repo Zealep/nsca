@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SolicitudService } from 'src/app/services/solicitud.service';
 import { Solicitud } from './../../interfaces/solicitud';
@@ -19,17 +19,19 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class RegistrarSolicitudComponent implements OnInit {
 
+  maxLength: number = 300; // Número máximo de caracteres permitidos
+  remainingChars: number = this.maxLength;
   fechaActual: string = new Date().toISOString().substring(0, 10)
   loading: boolean = false;
+  invalid: boolean = false
 
   listaParametros: ParametroList = {
-    codParametro: '',
-    lstParam: []
+    items: []
   }
 
 
   form: FormGroup = new FormGroup({
-    periodoCalculo: new FormControl('', Validators.required),
+    periodoCalculo: new FormControl('', [Validators.required, this.customValidator]),
     tipoSolicitud: new FormControl('', Validators.required),
     descripcion: new FormControl('', Validators.required),
     nombre: new FormControl('', Validators.required),
@@ -61,12 +63,23 @@ export class RegistrarSolicitudComponent implements OnInit {
         return EMPTY
       }))
       .subscribe(x => {
-        this.listaParametros = x[0]
+        this.listaParametros = x
       })
   }
 
 
   guardar() {
+
+    const tipoSoliciutd = this.form.get('tipoSolicitud')?.value;
+    const periodo = this.form.get('periodoCalculo')?.value;
+
+    if (tipoSoliciutd === '01') {
+      if (periodo.substring(4, 6) !== '12') {
+        this.invalid = true
+        return;
+      }
+    }
+
 
     this.loading = true
 
@@ -83,10 +96,11 @@ export class RegistrarSolicitudComponent implements OnInit {
       indActivos: this.form.get('checkAfiliado')?.value ? 'S' : 'N',
       indContAdm: this.form.get('checkContAdmini')?.value ? 'S' : 'N',
       indContJud: this.form.get('checkContJudicial')?.value ? 'S' : 'N',
+      idUsuacrea: 'CPELAEZ',
+      ipUsuacrea: '127.0.0.1'
     }
 
-    const tipoSoliciutd = this.form.get('tipoSolicitud')?.value;
-    const periodo = this.form.get('periodoCalculo')?.value;
+
 
 
     this.solicitudService.validarPeriodoSolicitud(tipoSoliciutd, periodo)
@@ -104,6 +118,7 @@ export class RegistrarSolicitudComponent implements OnInit {
           }
         }),
         catchError(error => {
+          this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
           this.loading = false
           return of(null); // Retornar un observable con valor nulo para evitar que el error se propague
         })
@@ -161,6 +176,57 @@ export class RegistrarSolicitudComponent implements OnInit {
       this.form.controls['checkAfiliado'].enable()
       this.form.controls['checkContJudicial'].enable()
     }
+  }
+
+
+  customValidator(control: FormControl): ValidationErrors | null {
+    const value = control.value;
+    const year = parseInt(value.slice(0, 4));
+    const month = parseInt(value.slice(4, 6));
+
+    const currentYear = new Date().getFullYear();
+
+    if (value.length !== 6) {
+      return { invalidFormat: true };
+    } else if (year > currentYear) {
+      return { invalidYear: true };
+    } else if (month < 1 || month > 12) {
+      return { invalidMonth: true };
+    }
+    else if (year < 2000) {
+      return { invalidYearMayor: true };
+    }
+
+    return null;
+  }
+
+
+  getValidationErrorMessage(): string {
+    const inputControl = this.form.get('periodoCalculo');
+    console.log('input', inputControl);
+    if (inputControl!.hasError('invalidFormat')) {
+      return 'Por favor ingresa el formato (YYYYMM).';
+    } else if (inputControl!.hasError('invalidYear')) {
+      return '(YYYY) No puede ser mayor al año actual.';
+    } else if (inputControl!.hasError('invalidMonth')) {
+      return 'El mes debe comprender entre 01 y 12.';
+    }
+    else if (inputControl!.hasError('invalidYearMayor')) {
+      return 'El año tiene que ser mayor al 2000'
+    }
+
+    return '';
+  }
+
+  soloNumeros(e: KeyboardEvent): boolean {
+    const input = e.key;
+    const regExp = /^[0-9]+$/;
+    return regExp.test(input);
+  }
+
+  onTextareaInput(event: Event): void {
+    const inputValue = (event.target as HTMLTextAreaElement).value;
+    this.remainingChars = this.maxLength - inputValue.length;
   }
 
 

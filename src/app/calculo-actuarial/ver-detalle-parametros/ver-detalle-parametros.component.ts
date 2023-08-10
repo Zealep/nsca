@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EMPTY, catchError } from 'rxjs';
 import { ParametroSolicitud } from 'src/app/interfaces/parametro-solicitud';
 import { Root } from 'src/app/interfaces/root';
@@ -16,8 +17,12 @@ import * as XLSX from 'xlsx';
 })
 export class VerDetalleParametrosComponent implements OnInit {
 
-  p: number = 1;
-  codSolicitud!: string
+  currentPage: number = 1;
+  itemsPerPage: number = 15;
+  totalItems: number = 0;
+
+
+  @Input() codSolicitud!: string
   selectedOption: string = '';
 
   solicitud: SolicPlaniMov =
@@ -46,11 +51,11 @@ export class VerDetalleParametrosComponent implements OnInit {
   constructor(private router: Router,
     private solicitudService: SolicitudService,
     private route: ActivatedRoute,
+    private activeModal: NgbActiveModal,
     private spinnerService: SpinnerOverlayService,
     private toastService: ToastService) { }
 
   ngOnInit() {
-    this.codSolicitud = this.route.snapshot.paramMap.get('codSolicitud')!;
     this.getSolicitudPlanillaMovimiento()
   }
 
@@ -68,22 +73,33 @@ export class VerDetalleParametrosComponent implements OnInit {
   }
 
   getParametrosSolicitud() {
+    if (this.selectedOption === "") {
+      return;
+    }
+
     this.spinnerService.show()
-    this.solicitudService.getParametrosSolicitud(this.codSolicitud, this.selectedOption, '1', '15')
+    this.solicitudService.getParametrosSolicitud(this.codSolicitud, this.selectedOption, this.currentPage, this.itemsPerPage)
       .pipe(catchError(error => {
         this.spinnerService.hide()
         this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
-        this.parametros = { paginacion: { totalRegistros: 0, page: 1, per_page: 10 }, items: [] }
+        this.parametros = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] }
         return EMPTY
       }))
       .subscribe(x => {
         this.spinnerService.hide()
         this.parametros = x
+        this.totalItems = x.paginacion.totalRegistros;
       })
   }
 
+  onPageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.getParametrosSolicitud();
+  }
+
+
   cerrar() {
-    this.router.navigate(['/calculo-actuarial/solicitud-bandeja'])
+    this.activeModal.close()
 
   }
 
@@ -115,8 +131,5 @@ export class VerDetalleParametrosComponent implements OnInit {
 
   }
 
-  verMovimientos() {
-    this.router.navigate(['/calculo-actuarial/ver-detalle-movimientos', this.codSolicitud])
-  }
 
 }
