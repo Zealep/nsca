@@ -16,11 +16,13 @@ import { SharedModule } from '../shared/shared.module';
 import { NgbToast } from '@ng-bootstrap/ng-bootstrap';
 import { CargaInformacionDiecinueveComponent } from './carga-informacion-diecinueve/carga-informacion-diecinueve.component';
 import { SortableHeaderDirective } from './sortable-header.directive';
+import { DndDirective } from './carga-file.directive';
+import { BandejaCargaDiecinueveComponent } from './carga-informacion-diecinueve/bandeja-carga-diecinueve/bandeja-carga-diecinueve.component';
 
 
 @NgModule({
-  declarations: [BandejaCalculoActuarialComponent, RegistrarSolicitudComponent, VerDetalleSolicitudComponent, VerDetalleParametrosComponent, VerDetalleMovimientosComponent, AnularPlanillasComponent, AnularSolicitudComponent, CargaInformacionDiecinueveComponent,
-    SortableHeaderDirective],
+  declarations: [BandejaCalculoActuarialComponent, RegistrarSolicitudComponent, VerDetalleSolicitudComponent, VerDetalleParametrosComponent, VerDetalleMovimientosComponent, AnularPlanillasComponent, AnularSolicitudComponent, CargaInformacionDiecinueveComponent, BandejaCargaDiecinueveComponent,
+    SortableHeaderDirective, DndDirective],
   imports: [
     CommonModule,
     CalculoActuarialRoutingModule,

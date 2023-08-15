@@ -8,9 +8,13 @@ import { VerDetalleMovimientosComponent } from './ver-detalle-movimientos/ver-de
 import { AnularPlanillasComponent } from './anular-planillas/anular-planillas.component';
 import { AnularSolicitudComponent } from './anular-solicitud/anular-solicitud.component';
 import { SortableHeaderDirective } from './sortable-header.directive';
+import { CargaInformacionDiecinueveComponent } from './carga-informacion-diecinueve/carga-informacion-diecinueve.component';
+import { BandejaCargaDiecinueveComponent } from './carga-informacion-diecinueve/bandeja-carga-diecinueve/bandeja-carga-diecinueve.component';
 
 const routes: Routes = [
   { path: 'solicitud-bandeja', component: BandejaCalculoActuarialComponent },
+  { path: 'carga-informacion', component: BandejaCargaDiecinueveComponent },
+
   /*
   { path: 'ver-detalle-solicitud/:codSolicitud', component: VerDetalleSolicitudComponent },
   { path: 'ver-detalle-parametros/:codSolicitud', component: VerDetalleParametrosComponent },

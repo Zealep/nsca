@@ -3,12 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EMPTY, catchError } from 'rxjs';
 import { ParametroSolicitud } from 'src/app/interfaces/parametro-solicitud';
-import { Root } from 'src/app/interfaces/root';
 import { SolicPlaniMov } from 'src/app/interfaces/solicitud-plani-mov';
 import { SpinnerOverlayService } from 'src/app/services/overlay.service';
 import { SolicitudService } from 'src/app/services/solicitud.service';
 import { ToastService } from 'src/app/services/toast.service';
 import * as XLSX from 'xlsx';
+import { Root } from './../../interfaces/root';
 
 @Component({
   selector: 'app-ver-detalle-parametros',
@@ -105,29 +105,48 @@ export class VerDetalleParametrosComponent implements OnInit {
 
   descargar() {
 
-    if (this.parametros.items.length == 0) {
+    if (this.selectedOption === "") {
+      this.toastService.show('Selecciona una planilla para descargar', { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
+      return;
+    }
+
+    if (this.totalItems == 0) {
       this.toastService.show('No hay datos en los parametros', { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
       return
     }
     const name = 'Parametros.xlsx';
 
-    const params = this.parametros.items.map(x => {
-      return {
-        'Planilla': x.desTipPla,
-        'Regimen': x.desTipoSolicitud,
-        'Parametro': x.desParametro,
-        'ID': x.idCodigo,
-        'Valor': x.valorCampo,
-      }
-    })
+    let dataExport: Root<ParametroSolicitud> = { paginacion: { totalRegistros: 0, page: 1, per_page: 10 }, items: [] };
 
 
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(params);
+    this.spinnerService.show()
+    this.solicitudService.getParametrosSolicitud(this.codSolicitud, this.selectedOption, 1, this.totalItems)
+      .pipe(catchError(error => {
+        this.spinnerService.hide()
+        this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
+        return EMPTY
+      }))
+      .subscribe(x => {
 
-    const book: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(book, worksheet, 'Listado de parametros');
-    XLSX.writeFile(book, name);
-    this.toastService.show('Se descargo correctamente el archivo de parametros', { classname: 'bg-success text-white', delay: 3000, icon: 'check' })
+        this.spinnerService.hide()
+        dataExport = x
+
+        const params = dataExport.items.map(x => {
+          return {
+            'Planilla': x.desTipPla,
+            'Regimen': x.desTipoSolicitud,
+            'Parametro': x.desParametro,
+            'ID': x.idCodigo,
+            'Valor': x.valorCampo,
+          }
+        })
+
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(params);
+        const book: XLSX.WorkBook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(book, worksheet, 'Listado de parametros');
+        XLSX.writeFile(book, name);
+        this.toastService.show('Se descargo correctamente el archivo de parametros', { classname: 'bg-success text-white', delay: 3000, icon: 'check' })
+      })
 
   }
 

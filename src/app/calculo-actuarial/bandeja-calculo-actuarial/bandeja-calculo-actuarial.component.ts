@@ -118,7 +118,7 @@ export class BandejaCalculoActuarialComponent implements OnInit, OnDestroy {
 
     modalRef.closed.subscribe(x => {
       if (x === 'refresh') {
-        console.log('llamar denuevo');
+
       }
 
     })

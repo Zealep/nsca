@@ -71,14 +71,20 @@ export class VerDetalleSolicitudComponent implements OnInit {
   }
 
   verDetalleParametro() {
-    const modalRef = this.modal.open(VerDetalleParametrosComponent);
+    const modalRef = this.modal.open(VerDetalleParametrosComponent,
+      {
+        size: 'lg'
+      });
     modalRef.componentInstance.codSolicitud = this.codSolicitud
     modalRef.closed.subscribe(x => {
     })
   }
 
   verDetalleMovimiento() {
-    const modalRef = this.modal.open(VerDetalleMovimientosComponent);
+    const modalRef = this.modal.open(VerDetalleMovimientosComponent,
+      {
+        size: 'lg'
+      });
     modalRef.componentInstance.codSolicitud = this.codSolicitud
     modalRef.closed.subscribe(x => {
     })

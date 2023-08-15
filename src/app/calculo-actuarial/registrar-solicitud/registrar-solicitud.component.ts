@@ -203,7 +203,6 @@ export class RegistrarSolicitudComponent implements OnInit {
 
   getValidationErrorMessage(): string {
     const inputControl = this.form.get('periodoCalculo');
-    console.log('input', inputControl);
     if (inputControl!.hasError('invalidFormat')) {
       return 'Por favor ingresa el formato (YYYYMM).';
     } else if (inputControl!.hasError('invalidYear')) {

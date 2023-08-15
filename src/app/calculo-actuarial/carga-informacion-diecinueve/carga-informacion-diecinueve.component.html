@@ -1,1 +1,88 @@
-<p>carga-informacion-diecinueve works!</p>
+<div class="container p-3">
+
+  <div>
+    <img src="./assets/images/icon-user.svg" class="me-2" width="20px" height="20px">
+    <span class="title-form"><strong>Solicitud N° {{solicitud.codSolicitud}}</strong></span>
+    <span class="ms-5">Usuario: JBAUTISTA</span>
+  </div>
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-6">
+        <label for="tipoSolicitud" class="form-label">Tipo de Solicitud</label>
+        <input type="text" class="form-control" id="tipoSolicitud" value="{{solicitud.desTipoSolicitud}}" disabled
+          readonly>
+      </div>
+
+      <div class="col-6">
+        <label for="periodo" class="form-label">Periodo de Cálculo</label>
+        <input type="text" class="form-control" id="periodo" value="{{solicitud.anhoCalculo}}" disabled readonly>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-12">
+        <label for="grupoPlanillas" class="form-label">Planillas</label>
+        <table class="table table-sm table-bordered" id="grupoPlanillas">
+          <thead>
+            <tr>
+              <th>Planilla</th>
+              <th>N° Registros</th>
+              <th>Estado</th>
+              <th>Cargar</th>
+              <th>Descargar inconsistencias</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of solicitud.planilla">
+              <td>{{p.desTipPla}}</td>
+              <td>{{p.desEst}}</td>
+              <td>{{p.desTipPla}}</td>
+              <td class="text-center"><button class="btn btn-primary btn-sm">
+                  <i class="fa-solid fa fa-upload"></i>
+                </button>
+              </td>
+              <td></td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+    <div class="contenedor" appDnd (fileDropped)="onFileDropped($event)">
+      <input type="file" #fileDropRef id="fileDropRef" multiple (change)="fileBrowseHandler($event)" />
+      <img src="./assets/images/uploading 1.svg" alt="">
+      <p>Suelta el archivo de Contingencias 19990 o da click en el icono de carga.</p>
+    </div>
+    <div class="files-list">
+      <div class="single-file" *ngFor="let file of files; let i = index">
+        <img src="./assets/images/ic-file.svg" width="45px" alt="file">
+        <div class="info">
+          <h4 class="name">
+            {{ file?.name }}
+          </h4>
+          <p class="size">
+            {{ formatBytes(file?.size) }}
+          </p>
+
+          <!-- <app-progress [progress]="file?.progress"></app-progress>-->
+
+        </div>
+        <img src="./assets/images/ic-delete-file.svg" class="delete" width="20px" alt="file" (click)="deleteFile(i)">
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <button class="btn btn-primary btn-sm" (click)="cerrar()">Cerrar</button>
+
+  </div>
+
+</div>
