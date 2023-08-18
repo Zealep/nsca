@@ -8,6 +8,8 @@ import { SolicitudService } from 'src/app/services/solicitud.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { CargaInformacionDiecinueveComponent } from '../carga-informacion-diecinueve.component';
 import { Router } from '@angular/router';
+import { BandejaSolicitudCarga } from 'src/app/interfaces/bandeja-solicitud-carga';
+import { COD_TIPO_SOLICITUD_1990 } from 'src/app/shared/var.constant';
 
 @Component({
   selector: 'app-bandeja-carga-diecinueve',
@@ -22,7 +24,7 @@ export class BandejaCargaDiecinueveComponent implements OnInit {
 
   periodo: string = ''
 
-  bandeja: Root<BandejaSolicitud> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
+  bandeja: Root<BandejaSolicitudCarga> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
 
 
   constructor(private router: Router,
@@ -32,19 +34,13 @@ export class BandejaCargaDiecinueveComponent implements OnInit {
     private toastService: ToastService) { }
 
   ngOnInit() {
+    this.getSearchBandeja()
   }
 
   getSearchBandeja() {
 
-    if (this.periodo === '' || this.periodo === undefined) {
-      this.toastService.show('Debe seleccionar el periodo', { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
-      return;
-    }
-
     this.spinnerService.show()
-
-
-    this.solicitudService.getBandejaSolicitud('01', this.periodo, this.currentPage, this.itemsPerPage)
+    this.solicitudService.getBandejaCarga(COD_TIPO_SOLICITUD_1990, '', this.currentPage, this.itemsPerPage)
       .pipe(catchError(error => {
         this.spinnerService.hide()
         this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
@@ -58,12 +54,12 @@ export class BandejaCargaDiecinueveComponent implements OnInit {
 
   }
 
-  verCargaInformacion(codSolicitud: string) {
+  verCargaInformacion(solicitud: BandejaSolicitudCarga) {
     const modalRef = this.modal.open(CargaInformacionDiecinueveComponent,
       {
         size: 'lg'
       });
-    modalRef.componentInstance.codSolicitud = codSolicitud
+    modalRef.componentInstance.solicitud = solicitud
     modalRef.closed.subscribe(x => {
 
     })
@@ -79,6 +75,7 @@ export class BandejaCargaDiecinueveComponent implements OnInit {
     const regExp = /^[0-9]+$/;
     return regExp.test(input);
   }
+
 
 
 

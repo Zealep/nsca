@@ -9,6 +9,7 @@ import { Solicitud } from '../interfaces/solicitud';
 import { ParametroSolicitud } from '../interfaces/parametro-solicitud';
 import { SolicPlaniMov } from '../interfaces/solicitud-plani-mov';
 import { ParametroList } from '../interfaces/param';
+import { BandejaSolicitudCarga } from '../interfaces/bandeja-solicitud-carga';
 
 @Injectable({
   providedIn: 'root'
@@ -118,6 +119,26 @@ export class SolicitudService {
         catchError(this.handleError)
       );
   }
+
+  getBandejaCarga(tipoSolicitud: string, periodo: string, numPag: number, numRegPorPag: number) {
+    let params = new HttpParams()
+    params = params.append("tipoSolicitud", tipoSolicitud)
+    if (periodo !== '') {
+      params = params.append("periodo", periodo)
+    }
+
+    params = params.append("numPag", numPag)
+    params = params.append("numRegPorPag", numRegPorPag)
+
+    return this.http.get<Root<BandejaSolicitudCarga>>(`http://demo4873478.mockable.io/calculoactuarial/e/carga/solicitud`,
+      {
+        params: params
+      })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 
 
 

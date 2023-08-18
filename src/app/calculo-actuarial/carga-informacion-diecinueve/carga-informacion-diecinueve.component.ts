@@ -2,10 +2,12 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EMPTY, catchError } from 'rxjs';
+import { BandejaSolicitudCarga } from 'src/app/interfaces/bandeja-solicitud-carga';
 import { SolicPlaniMov } from 'src/app/interfaces/solicitud-plani-mov';
 import { SpinnerOverlayService } from 'src/app/services/overlay.service';
 import { SolicitudService } from 'src/app/services/solicitud.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { COD_PLANILLA_ASEGURADOS } from 'src/app/shared/var.constant';
 
 @Component({
   selector: 'app-carga-informacion-diecinueve',
@@ -14,28 +16,10 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class CargaInformacionDiecinueveComponent implements OnInit {
 
+  mostrarCarga: boolean = false
 
-  @Input() codSolicitud!: string
+  @Input() solicitud!: BandejaSolicitudCarga
 
-  solicitud: SolicPlaniMov =
-    {
-      codSolicitud: '',
-      descSolicitud: '',
-      anhoCalculo: '',
-      fechRecepcion: '',
-      tipoSolicitud: '',
-      desTipoSolicitud: '',
-      nombSolicitante: '',
-      cargSolicitante: '',
-      mailSolicitante: '',
-      observacion: '',
-      indPensionistas: '',
-      indActivos: '',
-      indContAdm: '',
-      indContJud: '',
-      planilla: [],
-      movimiento: []
-    }
 
   constructor(private router: Router,
     private activeModal: NgbActiveModal,
@@ -47,7 +31,7 @@ export class CargaInformacionDiecinueveComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getSolicitudPlanillaMovimiento()
+
   }
 
   @ViewChild("fileDropRef", { static: false }) fileDropEl!: ElementRef;
@@ -132,22 +116,29 @@ export class CargaInformacionDiecinueveComponent implements OnInit {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
 
-  getSolicitudPlanillaMovimiento() {
-    this.spinnerService.show()
-    this.solicitudService.getSolicitudPlanillaMovimiento(this.codSolicitud)
-      .pipe(catchError(error => {
-        this.spinnerService.hide()
-        this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
-        return EMPTY
-      }))
-      .subscribe(x => {
-        this.spinnerService.hide()
-        this.solicitud = x
-      })
-  }
 
   cerrar() {
     this.activeModal.close()
   }
+  test() {
+    this.spinnerService.show()
+    setTimeout(() => {
+      this.spinnerService.hide()
+    }, 5000)
+  }
+
+  mostrarCargaArchivo(codPlanilla: string) {
+    if (codPlanilla === COD_PLANILLA_ASEGURADOS) {
+      this.mostrarCarga = false
+      console.log('cargar por bd');
+    } else {
+      this.mostrarCarga = true
+    }
+  }
+
+  descargarInconsistencias(codPlanilla: string) {
+
+  }
+
 
 }

@@ -25,6 +25,7 @@ $theme-colors: (
 
 body{
   font-size: 12px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .form-control, .form-select{
@@ -59,15 +60,6 @@ body{
   color: #fefefe;
   cursor: default;
 }
-
-/*
-body{
-  font-family: 'Poppins', sans-serif;
-
-}
-
-
-*/
 
 .cdk-overlay-container {
   z-index: 9000;

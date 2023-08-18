@@ -1,4 +1,6 @@
 <span class="mt-3 mb-3 p-3 bg-primary text-white">CÁLCULO ACTUARIAL</span>
+<!--
+
 <div class="mt-4">
   <div class="row g-3">
     <div class="col-auto">
@@ -8,7 +10,8 @@
         <option value="202012">202012</option>
         <option value="202112">202112</option>
         <option value="202212">202212</option>
-        <!-- <option *ngFor="let t of listaParametros.items" value="{{t.idCod}}">{{t.vlCamp}}</option>-->
+        <option value="200812">200812</option>
+        <option *ngFor="let t of listaParametros.items" value="{{t.idCod}}">{{t.vlCamp}}</option>
       </select>
     </div>
     <div class="col-auto">
@@ -17,6 +20,7 @@
   </div>
 </div>
 
+-->
 <div class="mt-4">
   <div class="table-responsive">
     <table class="table table-sm">
@@ -37,7 +41,7 @@
           <td>{{s.desTipoSolicitud}}</td>
           <td>{{s.anhoCalculo}}</td>
           <td>{{s.descEstadoSolicitud}}</td>
-          <td class="text-center"><button class="btn btn-primary btn-sm" (click)="verCargaInformacion(s.idSolicitud)">
+          <td class="text-center"><button class="btn btn-primary btn-sm" (click)="verCargaInformacion(s)">
               <i class="fa-solid fa fa-upload"></i>
             </button>
           </td>

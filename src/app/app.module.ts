@@ -16,6 +16,7 @@ import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from './shared/shared.module';
+import { MainComponent } from './main/main.component';
 
 
 registerLocaleData(es);
@@ -27,6 +28,7 @@ registerLocaleData(es);
     HeaderComponent,
     LoginComponent,
     ProgressSpinnerComponent,
+    MainComponent,
   ],
   imports: [
     BrowserModule,

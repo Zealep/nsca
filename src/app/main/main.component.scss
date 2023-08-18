@@ -1,0 +1,59 @@
+.black-border{
+  border: 1px solid black;
+}
+app-header{
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  height: 5rem;
+  z-index: 2;
+}
+
+main{
+  position: absolute;
+  width: 100%;
+  top: 5rem;
+  z-index: 1;
+}
+
+app-side-nav{
+  position: absolute;
+  left: 0rem;
+  width: 0px;
+  height: calc(100vh - 5rem);
+  box-shadow: 0px 0px 10px rgb(0, 0, 0,0.5);
+  background-color: #CCCCCC;
+  border-top: 1px solid #E5E5E5;
+  overflow-x: hidden;
+  white-space: nowrap;
+  transition: width 250ms ease-in;
+
+}
+
+.app-side-nav-open{
+  width: 250px;
+}
+
+.display-area{
+  position: absolute;
+  left: 0px;
+  width: calc(100% - 0px);
+  transition: left 250ms ease-in,
+  width 250ms ease-in;
+  margin-top: 35px;
+
+}
+.display-area-shrink{
+  width: calc(100% - 250px);
+  left: 250px;
+}
+
+/* PRUEBA* /
+
+/************************************************ Loadin Spinner Start  ************************************************/
+.cursor-loader {
+  cursor: wait;
+  * {
+    cursor: wait !important;
+  }
+}

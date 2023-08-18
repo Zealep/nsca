@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { CalculoActuarialModule } from './calculo-actuarial/calculo-actuarial.module';
 import { LoginComponent } from './login/login.component';
+import { MainComponent } from './main/main.component';
 
 const routes: Routes = [
   {
@@ -9,9 +10,19 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'calculo-actuarial', loadChildren: () =>
-      import('./calculo-actuarial/calculo-actuarial.module').then(m => m.CalculoActuarialModule)
+    path: '',
+    component: MainComponent,
+    children: [
+      { path: '', redirectTo: '/calculo-actuarial', pathMatch: 'full' },
+      {
+        path: 'calculo-actuarial', loadChildren: () =>
+          import('./calculo-actuarial/calculo-actuarial.module').then(m => m.CalculoActuarialModule)
+      }
+    ]
+
   },
+
+
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
