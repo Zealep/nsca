@@ -3,6 +3,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { CalculoActuarialModule } from './calculo-actuarial/calculo-actuarial.module';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
+import { AuthGaurdService } from './services/auth/auth-gaurd.service';
 
 const routes: Routes = [
   {
@@ -13,10 +14,16 @@ const routes: Routes = [
     path: '',
     component: MainComponent,
     children: [
-      { path: '', redirectTo: '/calculo-actuarial', pathMatch: 'full' },
+      { path: '', redirectTo: '/calculoActuarial', pathMatch: 'full' },
       {
-        path: 'calculo-actuarial', loadChildren: () =>
-          import('./calculo-actuarial/calculo-actuarial.module').then(m => m.CalculoActuarialModule)
+        path: 'calculoActuarial', loadChildren: () =>
+          import('./calculo-actuarial/calculo-actuarial.module').then(m => m.CalculoActuarialModule),
+        canLoad: [AuthGaurdService],
+      },
+      {
+        path: 'reportes', loadChildren: () =>
+          import('./reportes/reportes.module').then(m => m.ReportesModule),
+        canLoad: [AuthGaurdService],
       }
     ]
 
@@ -28,7 +35,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    enableTracing: true, // <-- debugging purposes only
+    //enableTracing: true, // <-- debugging purposes only
     preloadingStrategy: PreloadAllModules
   })],
   exports: [RouterModule]

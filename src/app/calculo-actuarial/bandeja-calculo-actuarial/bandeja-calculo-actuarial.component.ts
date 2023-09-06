@@ -57,12 +57,15 @@ export class BandejaCalculoActuarialComponent implements OnInit, OnDestroy {
 
   getTipoSolicitud() {
 
+    this.spinnerService.show()
     this.solicitudService.getTiposDeSolicitud()
       .pipe(catchError(error => {
+        this.spinnerService.hide()
         this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
         return EMPTY
       }))
       .subscribe(x => {
+        this.spinnerService.hide()
         this.listaParametros = x
       })
   }

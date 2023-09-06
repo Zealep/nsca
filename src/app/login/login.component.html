@@ -1,15 +1,15 @@
 <div class="background-style">
 
-  <div class="container d-flex flex-column align-items-center">
-
-    <div class="d-flex justify-content-between mt-5">
-      <div class="me-5">
-
+  <div class="container d-flex flex-column align-items-center principal">
+    <div class="d-flex align-items-end" style="margin-top: 13.5rem;">
+      <div style="margin-right: 12rem;">
         <img src="./assets/images/logos/logo-onp.png" alt="" width="200" height="55">
       </div>
-      <div class="ms-5 mt-5">
-        <span class="text-white">Nuevo Cálculo Actuarial</span>
+
+      <div style="margin-right: 0;">
+        <span class="text-white">Nuevo Sistema de Cálculo Actuarial</span>
       </div>
+
     </div>
 
     <div class="container mt-3">
@@ -20,27 +20,35 @@
             <div class="p-2">
               <div class="card-body">
 
-                <div class="container px-5">
+                <form [formGroup]="form">
 
-                  <div class="mb-3">
-                    <label for="user" class="form-label">Usuario</label>
-                    <input type="text" class="form-control" id="user">
+                  <div class="container px-5">
+
+                    <div class="mb-3">
+                      <label for="user" class="form-label">Usuario</label>
+                      <input type="text" class="form-control" id="user" formControlName="username" required>
+                    </div>
+
+                    <div class="mb-4">
+                      <label for="clave" class="form-label">Contraseña</label>
+                      <input type="password" class="form-control" id="clave" formControlName="password" required>
+                    </div>
+
+                    <p *ngIf="error" class="error">
+                      Usuario o Clave incorrectos
+                    </p>
+
+                    <div>
+                      <button class="btn btn-secondary btn-sm text-white " style="width: 100%;"
+                        [disabled]="this.form.invalid" (click)="submit()">
+                        Ingresar
+                      </button>
+
+                    </div>
+
                   </div>
 
-                  <div class="mb-4">
-                    <label for="clave" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="clave">
-                  </div>
-
-                  <div>
-                    <button class="btn btn-secondary btn-sm text-white " style="width: 100%;">
-                      Ingresar
-                    </button>
-
-                  </div>
-
-                </div>
-
+                </form>
               </div>
 
             </div>
@@ -48,8 +56,9 @@
           </div>
         </div>
       </div>
-
-
     </div>
+
+
+
 
   </div>

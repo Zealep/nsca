@@ -10,10 +10,13 @@ import { AnularSolicitudComponent } from './anular-solicitud/anular-solicitud.co
 import { SortableHeaderDirective } from './sortable-header.directive';
 import { CargaInformacionDiecinueveComponent } from './carga-informacion-diecinueve/carga-informacion-diecinueve.component';
 import { BandejaCargaDiecinueveComponent } from './carga-informacion-diecinueve/bandeja-carga-diecinueve/bandeja-carga-diecinueve.component';
+import { BandejaCalcularDiecinueveComponent } from './realizar-calculo/bandeja-calcular-diecinueve/bandeja-calcular-diecinueve.component';
 
 const routes: Routes = [
-  { path: 'solicitud-bandeja', component: BandejaCalculoActuarialComponent },
-  { path: 'carga-informacion', component: BandejaCargaDiecinueveComponent },
+  { path: 'solicitudBandeja', component: BandejaCalculoActuarialComponent },
+  { path: 'cargaInformacionNoventa', component: BandejaCargaDiecinueveComponent },
+  { path: 'calcularInformacionNoventa', component: BandejaCalcularDiecinueveComponent },
+
 
   /*
   { path: 'ver-detalle-solicitud/:codSolicitud', component: VerDetalleSolicitudComponent },

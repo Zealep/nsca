@@ -15,6 +15,7 @@
 
 .nav-list-item {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   height: 50px;
 }
@@ -29,12 +30,18 @@
   line-height: 25px;
 }
 
+.nested-list-li div {
+  white-space: wrap; /* Evitar que el contenido se divida en varias líneas */
+}
+
+
 .nested-list-li a{
+
   text-decoration: none;
   color:#212529;
 }
 
-.nested-list-li a:focus{
+.nested-list-li a:focus,.nested-list-li a:hover{
   color: #FFB81C;
 }
 
@@ -55,11 +62,13 @@
 }
 
 .nav-list-item span {
-  width: 120px;
+
   text-transform: capitalize;
+
 }
 
 .nav-list-item a {
+
   text-decoration: none;
   color: #66AFAC;
 }

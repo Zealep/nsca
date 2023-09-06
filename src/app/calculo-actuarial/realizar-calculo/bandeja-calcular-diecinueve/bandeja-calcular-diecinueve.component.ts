@@ -1,23 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EMPTY, catchError } from 'rxjs';
-import { BandejaSolicitud } from 'src/app/interfaces/bandeja-solicitud';
+import { BandejaSolicitudCarga } from 'src/app/interfaces/bandeja-solicitud-carga';
 import { Root } from 'src/app/interfaces/root';
 import { SpinnerOverlayService } from 'src/app/services/overlay.service';
 import { SolicitudService } from 'src/app/services/solicitud.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { CargaInformacionDiecinueveComponent } from '../carga-informacion-diecinueve.component';
-import { Router } from '@angular/router';
-import { BandejaSolicitudCarga } from 'src/app/interfaces/bandeja-solicitud-carga';
 import { COD_TIPO_SOLICITUD_1990 } from 'src/app/shared/var.constant';
+import { catchError, EMPTY } from 'rxjs';
+import { CalcularVerPlanillasComponent } from '../calcular-ver-planillas/calcular-ver-planillas.component';
 
 @Component({
-  selector: 'app-bandeja-carga-diecinueve',
-  templateUrl: './bandeja-carga-diecinueve.component.html',
-  styleUrls: ['./bandeja-carga-diecinueve.component.css']
+  selector: 'app-bandeja-calcular-diecinueve',
+  templateUrl: './bandeja-calcular-diecinueve.component.html',
+  styleUrls: ['./bandeja-calcular-diecinueve.component.scss']
 })
-export class BandejaCargaDiecinueveComponent implements OnInit {
-
+export class BandejaCalcularDiecinueveComponent {
   currentPage: number = 1;
   itemsPerPage: number = 10;
 
@@ -52,8 +50,8 @@ export class BandejaCargaDiecinueveComponent implements OnInit {
 
   }
 
-  verCargaInformacion(solicitud: BandejaSolicitudCarga) {
-    const modalRef = this.modal.open(CargaInformacionDiecinueveComponent,
+  verPlanillas(solicitud: BandejaSolicitudCarga) {
+    const modalRef = this.modal.open(CalcularVerPlanillasComponent,
       {
         size: 'lg'
       });

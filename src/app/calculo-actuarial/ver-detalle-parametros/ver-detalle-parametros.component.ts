@@ -17,6 +17,7 @@ import { Root } from './../../interfaces/root';
 })
 export class VerDetalleParametrosComponent implements OnInit {
 
+  usuario!: string
   currentPage: number = 1;
   itemsPerPage: number = 15;
   totalItems: number = 0;
@@ -56,6 +57,7 @@ export class VerDetalleParametrosComponent implements OnInit {
     private toastService: ToastService) { }
 
   ngOnInit() {
+    this.usuario = sessionStorage.getItem('usuario')!
     this.getSolicitudPlanillaMovimiento()
   }
 

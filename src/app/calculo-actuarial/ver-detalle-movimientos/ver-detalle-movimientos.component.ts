@@ -15,6 +15,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class VerDetalleMovimientosComponent {
   p: number = 1;
+  usuario!: string
 
   @Input() codSolicitud!: string
 
@@ -46,6 +47,7 @@ export class VerDetalleMovimientosComponent {
     private toastService: ToastService) { }
 
   ngOnInit() {
+    this.usuario = sessionStorage.getItem('usuario')!
     this.getSolicitudPlanillaMovimiento()
   }
 

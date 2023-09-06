@@ -17,7 +17,7 @@ import { ToastService } from 'src/app/services/toast.service';
   styleUrls: ['./anular-solicitud.component.scss']
 })
 export class AnularSolicitudComponent {
-
+  usuario!: string
   @Input() codSolicitud!: string
 
   solicitud: SolicPlaniMov =
@@ -49,6 +49,7 @@ export class AnularSolicitudComponent {
     private toastService: ToastService) { }
 
   ngOnInit() {
+    this.usuario = sessionStorage.getItem('usuario')!
     this.getSolicitudPlanillaMovimiento()
   }
 
@@ -80,7 +81,6 @@ export class AnularSolicitudComponent {
         this.requestEliminar();
       }
     })
-
   }
 
   requestEliminar() {

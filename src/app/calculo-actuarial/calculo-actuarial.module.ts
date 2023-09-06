@@ -18,11 +18,13 @@ import { CargaInformacionDiecinueveComponent } from './carga-informacion-diecinu
 import { SortableHeaderDirective } from './sortable-header.directive';
 import { DndDirective } from './carga-file.directive';
 import { BandejaCargaDiecinueveComponent } from './carga-informacion-diecinueve/bandeja-carga-diecinueve/bandeja-carga-diecinueve.component';
+import { BandejaCalcularDiecinueveComponent } from './realizar-calculo/bandeja-calcular-diecinueve/bandeja-calcular-diecinueve.component';
+import { CalcularVerPlanillasComponent } from './realizar-calculo/calcular-ver-planillas/calcular-ver-planillas.component';
 
 
 @NgModule({
   declarations: [BandejaCalculoActuarialComponent, RegistrarSolicitudComponent, VerDetalleSolicitudComponent, VerDetalleParametrosComponent, VerDetalleMovimientosComponent, AnularPlanillasComponent, AnularSolicitudComponent, CargaInformacionDiecinueveComponent, BandejaCargaDiecinueveComponent,
-    SortableHeaderDirective, DndDirective],
+    SortableHeaderDirective, DndDirective, BandejaCalcularDiecinueveComponent, CalcularVerPlanillasComponent],
   imports: [
     CommonModule,
     CalculoActuarialRoutingModule,

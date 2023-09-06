@@ -15,6 +15,7 @@ import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog
 })
 export class AnularPlanillasComponent {
 
+  usuario!: string
   @Input() codSolicitud!: string
 
   solicitud: SolicPlaniMov =
@@ -47,6 +48,7 @@ export class AnularPlanillasComponent {
     private toastService: ToastService) { }
 
   ngOnInit() {
+    this.usuario = sessionStorage.getItem('usuario')!
     this.getSolicitudPlanillaMovimiento()
   }
 

@@ -19,6 +19,7 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class RegistrarSolicitudComponent implements OnInit {
 
+  usuario!: string
   maxLength: number = 300; // Número máximo de caracteres permitidos
   remainingChars: number = this.maxLength;
   fechaActual: string = new Date().toISOString().substring(0, 10)
@@ -52,6 +53,7 @@ export class RegistrarSolicitudComponent implements OnInit {
     private toastService: ToastService) { }
 
   ngOnInit() {
+    this.usuario = sessionStorage.getItem('usuario')!
     this.getTipoSolicitud()
   }
 

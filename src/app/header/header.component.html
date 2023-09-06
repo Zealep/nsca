@@ -6,12 +6,13 @@
     </div>
 
     <a class="navbar-brand px-3" href="#">
-      <img src="./assets/images/Logo.png" alt="" width="300" height="55" class="d-inline-block align-text-top">
+      <img src="./assets/images/logos/logo-onp.png" alt="" width="200" height="55"
+        class="d-inline-block align-text-top">
     </a>
   </div>
 
   <div class="d-flex align-items-center">
-    <a href="#" class="me-4">Cerrar sesión</a>
+    <a class="me-4" (click)="cerrar()">Cerrar sesión</a>
     <!--
     <i class="fa-solid fa-user fa-lg me-3"></i>
     -->
@@ -20,5 +21,5 @@
 
 </nav>
 <div class="d-flex align-items-end flex-column user-info">
-  <span class="me-3 ml-auto p-2 user-text">JULIO CÉSAR BAUTISTA TANG - ACTUARIO</span>
+  <span class="me-3 ml-auto p-2 user-text">{{usuario}} - {{nombre}}</span>
 </div>

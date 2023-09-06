@@ -1,46 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.scss']
 })
-export class SideNavComponent {
+export class SideNavComponent implements OnInit {
 
   @Input() sideNavStatus: boolean = false
+  permisos!: any
 
-  list = [
-    {
-      number: "1",
-      name: "PARAMETROS",
-      icon: "fa-solid fa-folder"
-    },
-    {
-      number: "2",
-      name: "CALCULO ACTUARIAL",
-      icon: "fa-solid fa-folder",
-      id: "calculo-actuarial",
-      items: [
-        {
-
-          name: "Administrar Solicitud"
-        },
-        {
-
-          name: "Anular Solicitud"
-        }
-
-      ]
-    },
-    {
-      number: "3",
-      name: "REPORTES",
-      icon: "fa-solid fa-folder"
-    }, {
-      number: "4",
-      name: "FLUJO DE CAJA",
-      icon: "fa-solid fa-folder"
-    }
-  ]
+  ngOnInit(): void {
+    const dataToken: any = jwt_decode(sessionStorage.getItem('token')!)
+    console.log('token', dataToken);
+    this.permisos = dataToken.permisos!
+  }
 
 }

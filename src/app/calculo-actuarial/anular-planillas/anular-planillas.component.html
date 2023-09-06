@@ -2,7 +2,7 @@
   <div>
     <img src="./assets/images/icon-user.svg" class="me-2" width="20px" height="20px">
     <span class="title-form"><strong>Solicitud N° {{solicitud.codSolicitud}}</strong></span>
-    <span class="ms-5">Usuario: JBAUTISTA</span>
+    <span class="ms-5">Usuario: {{usuario}}</span>
   </div>
 
   <div class="container mt-3">
@@ -46,7 +46,8 @@
               <tr *ngFor="let p of solicitud.planilla">
                 <td>{{p.desTipPla}}</td>
                 <td>{{p.desEst}}</td>
-                <td><button class="btn btn-primary btn-sm" (click)="eliminar(p.codTipPla,p.desTipPla)">
+                <td class="text-center"><button class="btn btn-primary btn-sm"
+                    (click)="eliminar(p.codTipPla,p.desTipPla)">
                     <i class="fa-solid fa-xmark"></i>
                   </button></td>
               </tr>

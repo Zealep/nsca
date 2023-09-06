@@ -16,7 +16,10 @@ import { COD_PLANILLA_ASEGURADOS } from 'src/app/shared/var.constant';
 })
 export class CargaInformacionDiecinueveComponent implements OnInit {
 
+  usuario!: string
   mostrarCarga: boolean = false
+  planillaSelected!: string | null
+  nombreCarga: string = 'Contingencias 19990'
 
   @Input() solicitud!: BandejaSolicitudCarga
 
@@ -31,80 +34,30 @@ export class CargaInformacionDiecinueveComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.usuario = sessionStorage.getItem('usuario')!
   }
 
   @ViewChild("fileDropRef", { static: false }) fileDropEl!: ElementRef;
   files: any[] = [];
 
-  /**
-   * on file drop handler
-   */
   onFileDropped($event: any) {
     this.prepareFilesList($event);
   }
 
-  /**
-   * handle file from browsing
-   */
   fileBrowseHandler($event: any) {
     const files = $event.target.files;
     this.prepareFilesList(files);
   }
 
-  /**
-   * Delete file from files list
-   * @param index (File index)
-   */
-  deleteFile(index: number) {
-    /*
-    if (this.files[index].progress < 100) {
-      console.log("Upload in progress.");
-      return;
-    }*/
-    this.files.splice(index, 1);
-  }
-
-  /**
-   * Simulate the upload process
-   */
-  /*
-  uploadFilesSimulator(index: number) {
-    setTimeout(() => {
-      if (index === this.files.length) {
-        return;
-      } else {
-        const progressInterval = setInterval(() => {
-          if (this.files[index].progress === 100) {
-            clearInterval(progressInterval);
-            this.uploadFilesSimulator(index + 1);
-          } else {
-            this.files[index].progress += 5;
-          }
-        }, 200);
-      }
-    }, 1000);
-  }
-  */
-
-  /**
-   * Convert Files list to normal array list
-   * @param files (Files List)
-   */
   prepareFilesList(files: Array<any>) {
     for (const item of files) {
-      //item.progress = 0;
       this.files.push(item);
     }
+    this.cargarPlanilla()
     this.fileDropEl.nativeElement.value = "";
-    //this.uploadFilesSimulator(0);
   }
 
-  /**
-   * format bytes
-   * @param bytes (File size in bytes)
-   * @param decimals (Decimals point)
-   */
+
   formatBytes(bytes: any, decimals = 2) {
     if (bytes === 0) {
       return "0 Bytes";
@@ -116,6 +69,53 @@ export class CargaInformacionDiecinueveComponent implements OnInit {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
 
+  cargarPlanilla() {
+    console.log('files', this.files);
+    console.log('codPlan', this.planillaSelected)
+    if (this.files.length > 0 && this.planillaSelected != null) {
+      const usuario = sessionStorage.getItem('usuario')!
+      const ip = '127.0.0.1'
+      let formData = new FormData()
+      formData.append('archivo', this.files[0])
+
+
+      this.spinnerService.show()
+
+      this.solicitudService.cargarPlanilla(this.planillaSelected, this.solicitud.idSolicitud, usuario, ip, formData)
+        .pipe(catchError(error => {
+          this.spinnerService.hide()
+          this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
+          this.fileDropEl.nativeElement.value = "";
+          return EMPTY
+        }))
+        .subscribe(res => {
+          this.updateTableLoad(res)
+          this.spinnerService.hide()
+          this.mostrarCarga = false
+          this.toastService.show(`Se cargo la planilla de ${res.desTipPla} correctamente`, { classname: 'bg-success text-white', delay: 3000, icon: 'check' })
+        })
+
+    }
+  }
+
+
+  updateTableLoad(res: any) {
+
+    const codPlanilla = res.codTipPla
+    const indexFound = this.solicitud.planilla.findIndex(planilla => planilla.codTipPla === codPlanilla)
+    console.log('index', indexFound);
+    if (indexFound !== -1) {
+      console.log('entro');
+      const planillaEncontrada = { ... this.solicitud.planilla[indexFound] }
+      planillaEncontrada.codEst = res.codEst
+      planillaEncontrada.desEst = res.desEst
+      planillaEncontrada.numPerPla = res.numPerPla
+      planillaEncontrada.indHabPlan = res.indHabPlan
+      planillaEncontrada.indExisIncon = res.indExisIncon
+
+      this.solicitud.planilla[indexFound] = planillaEncontrada
+    }
+  }
 
   cerrar() {
     this.activeModal.close()
@@ -127,16 +127,41 @@ export class CargaInformacionDiecinueveComponent implements OnInit {
     }, 5000)
   }
 
-  mostrarCargaArchivo(codPlanilla: string) {
+  mostrarCargaArchivo(codPlanilla: string, desPlanilla: string) {
     if (codPlanilla === COD_PLANILLA_ASEGURADOS) {
+      this.planillaSelected = codPlanilla
       this.mostrarCarga = false
       console.log('cargar por bd');
     } else {
       this.mostrarCarga = true
+      this.nombreCarga = desPlanilla
+      this.planillaSelected = codPlanilla
     }
   }
 
   descargarInconsistencias(codPlanilla: string) {
+    let name = 'Informe_InconsistenciasPDF'
+    const usuario = sessionStorage.getItem('usuario')!
+    this.spinnerService.show()
+    //ip-request
+    this.solicitudService.getInconsistencias(codPlanilla, this.solicitud.idSolicitud, usuario, 'localhost')
+      .pipe(catchError(error => {
+        this.spinnerService.hide()
+        this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
+        return EMPTY
+      }))
+      .subscribe(result => {
+        this.spinnerService.hide()
+        this.toastService.show('Se descargo el reporte de inconsistencias correctamente', { classname: 'bg-success text-white', delay: 3000, icon: 'check' })
+        const url = window.URL.createObjectURL(result);
+        const a = document.createElement('a');
+        a.setAttribute('style', 'display:none;');
+        document.body.appendChild(a);
+        a.href = url;
+        a.download = `${name}-${codPlanilla}.pdf`;
+        a.click();
+        return url;
+      })
 
   }
 

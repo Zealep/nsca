@@ -1,67 +1,28 @@
 <div class="side-nav-content">
 
   <ul class="nav-list" [ngClass]="{'nav-list-open': sideNavStatus}" id="menu">
-    <li class="nav-list-item">
-      <i class="fa-solid fa-folder"></i>
-      <span>
-        <a href="#parametrolMenu" data-bs-toggle="collapse">PARAMETROS</a>
-      </span>
-    </li>
 
-    <div id="parametrolMenu" class="collapse">
-      <ul class="nested-list-ul">
+    <div *ngFor="let p of this.permisos; let ind=index">
 
-        <li class="nested-list-li">
-          <a [routerLink]="''"><span>Cálculo Actuarial</span></a>
-        </li>
+      <li class="nav-list-item">
+        <i class="fa-solid fa-folder"></i>
+        <span>
+          <a href="#{{ind}}Menu" data-bs-toggle="collapse">{{p.nombre}}</a>
+        </span>
+      </li>
 
-        <li class="nested-list-li">
-          <a [routerLink]="''"><span>Estudio de Impacto</span></a>
-        </li>
+      <div id="{{ind}}Menu" class="collapse">
+        <ul class="nested-list-ul">
 
-        <li class="nested-list-li">
-          <a [routerLink]="''"><span>Mort. y Esperanza de Vida</span></a>
-        </li>
+          <li class="nested-list-li" *ngFor="let h of p.hijos">
+            <div class="d-flex">
+              <a [routerLink]="p.accion+h.accion">{{h.nombre}}</a>
+            </div>
+          </li>
+        </ul>
+      </div>
 
-      </ul>
     </div>
-
-
-
-    <li class="nav-list-item">
-      <i class="fa-solid fa-folder"></i>
-      <span>
-        <a href="#calculoActuarialMenu" data-bs-toggle="collapse">CALCULO
-          ACTUARIAL</a>
-      </span>
-    </li>
-
-    <!-- Lista multinivel colapsable para CALCULO ACTUARIAL -->
-    <div id="calculoActuarialMenu" class="collapse">
-      <ul class="nested-list-ul">
-        <li class="nested-list-li">
-          <a [routerLink]="'/calculo-actuarial/solicitud-bandeja'"><span>Administrar Solicitudes</span></a>
-        </li>
-        <li class="nested-list-li">
-          <a [routerLink]="'/calculo-actuarial/carga-informacion'"><span>Carga de información DL-19990</span></a>
-        </li>
-
-      </ul>
-    </div>
-
-    <li class="nav-list-item">
-      <i class="fa-solid fa-folder"></i>
-      <span>
-        <a href="#">REPORTES</a>
-      </span>
-    </li>
-
-    <li class="nav-list-item">
-      <i class="fa-solid fa-folder"></i>
-      <span>
-        <a href="#">FLUJO DE CAJA</a>
-      </span>
-    </li>
 
   </ul>
 

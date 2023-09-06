@@ -1,22 +1,23 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { Root } from '../interfaces/root';
 import { BandejaSolicitud } from '../interfaces/bandeja-solicitud';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { Solicitud } from '../interfaces/solicitud';
 import { ParametroSolicitud } from '../interfaces/parametro-solicitud';
 import { SolicPlaniMov } from '../interfaces/solicitud-plani-mov';
 import { ParametroList } from '../interfaces/param';
 import { BandejaSolicitudCarga } from '../interfaces/bandeja-solicitud-carga';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SolicitudService {
 
-  private url: string = `${environment.host}`;
+  private url: string = `${environment.hostSolicitud}`;
+  private urlTwo: string = `${environment.hostCarga}`;
 
   constructor(private router: Router,
     private http: HttpClient) {
@@ -120,17 +121,11 @@ export class SolicitudService {
       );
   }
 
-  getBandejaCarga(tipoSolicitud: string, periodo: string, numPag: number, numRegPorPag: number) {
+  getBandejaCarga(tipoSolicitud: string) {
     let params = new HttpParams()
     params = params.append("tipoSolicitud", tipoSolicitud)
-    if (periodo !== '') {
-      params = params.append("periodo", periodo)
-    }
 
-    params = params.append("numPag", numPag)
-    params = params.append("numRegPorPag", numRegPorPag)
-
-    return this.http.get<Root<BandejaSolicitudCarga>>(`http://demo4873478.mockable.io/calculoactuarial/e/carga/solicitud`,
+    return this.http.get<Root<BandejaSolicitudCarga>>(`${this.urlTwo}/carga/solicitud`,
       {
         params: params
       })
@@ -138,6 +133,41 @@ export class SolicitudService {
         catchError(this.handleError)
       );
   }
+
+  getInconsistencias(codPlanilla: string, codSolicitud: number, usuario: string, ip: string): Observable<Blob> {
+    const headers = new HttpHeaders({
+      'idUsuaCrea': usuario,
+      'ipUsuaCrea': ip
+    });
+
+    return this.http.get(`${this.urlTwo}/carga/${codPlanilla}-${codSolicitud}/inconsistencias`,
+      {
+        headers: headers,
+        responseType: 'blob'
+      })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+
+  cargarPlanilla(codPlanilla: string, codSolicitud: number, usuario: string, ip: string, formData: FormData) {
+
+
+    const headers = new HttpHeaders({
+      'idUsuaCrea': usuario,
+      'ipUsuaCrea': ip
+    });
+
+    return this.http.post<any>(`${this.urlTwo}/carga/${codPlanilla}-${codSolicitud}/cargaPlanilla`,
+      formData, {
+      headers: headers
+    })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
 
 
 

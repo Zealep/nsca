@@ -17,6 +17,7 @@ import { VerDetalleMovimientosComponent } from '../ver-detalle-movimientos/ver-d
 })
 export class VerDetalleSolicitudComponent implements OnInit {
 
+  usuario!: string
   @Input() codSolicitud!: string
 
   solicitud: SolicPlaniMov =
@@ -48,6 +49,7 @@ export class VerDetalleSolicitudComponent implements OnInit {
     private toastService: ToastService) { }
 
   ngOnInit() {
+    this.usuario = sessionStorage.getItem('usuario')!
     this.getSolicitudPlanillaMovimiento()
   }
 
