@@ -70,32 +70,34 @@ export class CargaInformacionDiecinueveComponent implements OnInit {
   }
 
   cargarPlanilla() {
-    console.log('files', this.files);
-    console.log('codPlan', this.planillaSelected)
+
     if (this.files.length > 0 && this.planillaSelected != null) {
-      const usuario = sessionStorage.getItem('usuario')!
-      const ip = '127.0.0.1'
       let formData = new FormData()
       formData.append('archivo', this.files[0])
-
-
-      this.spinnerService.show()
-
-      this.solicitudService.cargarPlanilla(this.planillaSelected, this.solicitud.idSolicitud, usuario, ip, formData)
-        .pipe(catchError(error => {
-          this.spinnerService.hide()
-          this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
-          this.fileDropEl.nativeElement.value = "";
-          return EMPTY
-        }))
-        .subscribe(res => {
-          this.updateTableLoad(res)
-          this.spinnerService.hide()
-          this.mostrarCarga = false
-          this.toastService.show(`Se cargo la planilla de ${res.desTipPla} correctamente`, { classname: 'bg-success text-white', delay: 3000, icon: 'check' })
-        })
-
+      this.ejecutarCarga(this.planillaSelected, formData)
     }
+
+  }
+
+  ejecutarCarga(codPlanilla: string, formData: FormData) {
+
+    const usuario = sessionStorage.getItem('usuario')!
+    const ip = '127.0.0.1'
+
+    this.spinnerService.show()
+    this.solicitudService.cargarPlanilla(codPlanilla, this.solicitud.idSolicitud, usuario, ip, formData)
+      .pipe(catchError(error => {
+        this.spinnerService.hide()
+        this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
+        this.fileDropEl.nativeElement.value = "";
+        return EMPTY
+      }))
+      .subscribe(res => {
+        this.updateTableLoad(res)
+        this.spinnerService.hide()
+        this.mostrarCarga = false
+        this.toastService.show(`Se cargo la planilla de ${res.desTipPla} correctamente`, { classname: 'bg-success text-white', delay: 3000, icon: 'check' })
+      })
   }
 
 
@@ -103,9 +105,7 @@ export class CargaInformacionDiecinueveComponent implements OnInit {
 
     const codPlanilla = res.codTipPla
     const indexFound = this.solicitud.planilla.findIndex(planilla => planilla.codTipPla === codPlanilla)
-    console.log('index', indexFound);
     if (indexFound !== -1) {
-      console.log('entro');
       const planillaEncontrada = { ... this.solicitud.planilla[indexFound] }
       planillaEncontrada.codEst = res.codEst
       planillaEncontrada.desEst = res.desEst
@@ -131,7 +131,9 @@ export class CargaInformacionDiecinueveComponent implements OnInit {
     if (codPlanilla === COD_PLANILLA_ASEGURADOS) {
       this.planillaSelected = codPlanilla
       this.mostrarCarga = false
-      console.log('cargar por bd');
+      let formData = new FormData()
+      formData.append('archivo', '')
+      this.ejecutarCarga(this.planillaSelected, formData)
     } else {
       this.mostrarCarga = true
       this.nombreCarga = desPlanilla

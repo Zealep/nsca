@@ -35,11 +35,11 @@
         <tr
           *ngFor="let s of sortBandeja.items  | paginate: { id: 'server', itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }">
           <td>{{s.idSolicitud}}</td>
-          <td>{{s.desTipoSolicitud}}{{s.idSolicitud}}</td>
+          <td>{{s.desTipoSolicitud}} {{s.idSolicitud}}</td>
           <td>{{s.anhoCalculo}}</td>
           <td>{{s.desTipoSolicitud}}</td>
           <td class="text-center"><button class="btn btn-primary btn-sm" (click)="generarReporte(s.idSolicitud)">
-              <i class="fa-solid fa-xmark"></i>
+              <i class="fa-solid fa-file-lines"></i>
             </button>
           </td>
         </tr>

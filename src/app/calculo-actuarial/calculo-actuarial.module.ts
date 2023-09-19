@@ -20,11 +20,13 @@ import { DndDirective } from './carga-file.directive';
 import { BandejaCargaDiecinueveComponent } from './carga-informacion-diecinueve/bandeja-carga-diecinueve/bandeja-carga-diecinueve.component';
 import { BandejaCalcularDiecinueveComponent } from './realizar-calculo/bandeja-calcular-diecinueve/bandeja-calcular-diecinueve.component';
 import { CalcularVerPlanillasComponent } from './realizar-calculo/calcular-ver-planillas/calcular-ver-planillas.component';
+import { RevisarConsistenciarComponent } from './revisar-consistenciar/revisar-consistenciar.component';
+import { VerRevisarConsistenciarComponent } from './revisar-consistenciar/ver-revisar-consistenciar/ver-revisar-consistenciar.component';
 
 
 @NgModule({
   declarations: [BandejaCalculoActuarialComponent, RegistrarSolicitudComponent, VerDetalleSolicitudComponent, VerDetalleParametrosComponent, VerDetalleMovimientosComponent, AnularPlanillasComponent, AnularSolicitudComponent, CargaInformacionDiecinueveComponent, BandejaCargaDiecinueveComponent,
-    SortableHeaderDirective, DndDirective, BandejaCalcularDiecinueveComponent, CalcularVerPlanillasComponent],
+    SortableHeaderDirective, DndDirective, BandejaCalcularDiecinueveComponent, CalcularVerPlanillasComponent, RevisarConsistenciarComponent, VerRevisarConsistenciarComponent],
   imports: [
     CommonModule,
     CalculoActuarialRoutingModule,

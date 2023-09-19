@@ -41,16 +41,21 @@ export class LoginComponent {
 
 
   checkLogin() {
+    this.spinnerService.show()
+
     let username: string = this.form.get('username')?.value;
     let clave: string = this.form.get('password')?.value;
+
 
     (this.authService.authenticate(username.trim(), clave.trim()).subscribe(
       data => {
         //this.getIp()
+        this.spinnerService.hide()
         this.router.navigate(['calculoActuarial'])
         this.invalidLogin = false
       },
       error => {
+        this.spinnerService.hide()
         this.invalidLogin = true
         this.error = error.error.message;
 

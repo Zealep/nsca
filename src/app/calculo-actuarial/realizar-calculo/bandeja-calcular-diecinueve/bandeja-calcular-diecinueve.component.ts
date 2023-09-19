@@ -9,6 +9,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { COD_TIPO_SOLICITUD_1990 } from 'src/app/shared/var.constant';
 import { catchError, EMPTY } from 'rxjs';
 import { CalcularVerPlanillasComponent } from '../calcular-ver-planillas/calcular-ver-planillas.component';
+import { BandejaSolicitudCalculo } from 'src/app/interfaces/bandeja-solicitud-calculo';
 
 @Component({
   selector: 'app-bandeja-calcular-diecinueve',
@@ -21,7 +22,7 @@ export class BandejaCalcularDiecinueveComponent {
 
   periodo: string = ''
 
-  bandeja: Root<BandejaSolicitudCarga> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
+  bandeja: Root<BandejaSolicitudCalculo> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
 
 
   constructor(private router: Router,
@@ -37,7 +38,7 @@ export class BandejaCalcularDiecinueveComponent {
   getSearchBandeja() {
 
     this.spinnerService.show()
-    this.solicitudService.getBandejaCarga(COD_TIPO_SOLICITUD_1990)
+    this.solicitudService.getBandejaCalculo(COD_TIPO_SOLICITUD_1990)
       .pipe(catchError(error => {
         this.spinnerService.hide()
         this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
@@ -50,7 +51,7 @@ export class BandejaCalcularDiecinueveComponent {
 
   }
 
-  verPlanillas(solicitud: BandejaSolicitudCarga) {
+  verPlanillas(solicitud: BandejaSolicitudCalculo) {
     const modalRef = this.modal.open(CalcularVerPlanillasComponent,
       {
         size: 'lg'

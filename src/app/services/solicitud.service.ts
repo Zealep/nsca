@@ -3,23 +3,24 @@ import { Injectable } from '@angular/core';
 import { Root } from '../interfaces/root';
 import { BandejaSolicitud } from '../interfaces/bandeja-solicitud';
 import { Observable, catchError, throwError } from 'rxjs';
-import { Router } from '@angular/router';
 import { Solicitud } from '../interfaces/solicitud';
 import { ParametroSolicitud } from '../interfaces/parametro-solicitud';
 import { SolicPlaniMov } from '../interfaces/solicitud-plani-mov';
 import { ParametroList } from '../interfaces/param';
 import { BandejaSolicitudCarga } from '../interfaces/bandeja-solicitud-carga';
 import { environment } from 'src/environments/environment';
+import { BandejaSolicitudCalculo } from '../interfaces/bandeja-solicitud-calculo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SolicitudService {
 
-  private url: string = `${environment.hostSolicitud}`;
-  private urlTwo: string = `${environment.hostCarga}`;
+  private urlSolicitud: string = `${environment.hostSolicitud}`;
+  private urlCarga: string = `${environment.hostCarga}`;
+  private urlCalculo: string = `${environment.hostCalculo}`;
 
-  constructor(private router: Router,
+  constructor(
     private http: HttpClient) {
 
   }
@@ -34,7 +35,7 @@ export class SolicitudService {
     params = params.append("numPag", numPag)
     params = params.append("numRegPorPag", numRegPorPag)
 
-    return this.http.get<Root<BandejaSolicitud>>(`${this.url}/consulta/solicitud`,
+    return this.http.get<Root<BandejaSolicitud>>(`${this.urlSolicitud}/consulta/solicitud`,
       {
         params: params
       })
@@ -44,7 +45,7 @@ export class SolicitudService {
   }
 
   registrarSolicitud(r: Solicitud, tipoSolicitud: string, periodo: string) {
-    return this.http.post<any>(`${this.url}/solicitud/${tipoSolicitud}-${periodo}/registrarSolicitud`, r)
+    return this.http.post<any>(`${this.urlSolicitud}/solicitud/${tipoSolicitud}-${periodo}/registrarSolicitud`, r)
       .pipe(
         catchError(this.handleError)
       );
@@ -60,7 +61,7 @@ export class SolicitudService {
     params = params.append("numPag", numPag)
     params = params.append("numRegPorPag", numRegPorPag)
 
-    return this.http.get<Root<ParametroSolicitud>>(`${this.url}/consulta/parametrosCalculo`,
+    return this.http.get<Root<ParametroSolicitud>>(`${this.urlSolicitud}/consulta/parametrosCalculo`,
       {
         params: params
       })
@@ -70,14 +71,14 @@ export class SolicitudService {
   }
 
   anularSolicitud(codSolicitud: string) {
-    return this.http.put<any>(`${this.url}/solicitud/${codSolicitud}/anularSolicitud`, {})
+    return this.http.put<any>(`${this.urlSolicitud}/solicitud/${codSolicitud}/anularSolicitud`, {})
       .pipe(
         catchError(this.handleError)
       );
   }
 
   anularPlanilla(codSolicitud: string, codPlani: string) {
-    return this.http.put<any>(`${this.url}/solicitud/${codSolicitud}-${codPlani}/anularPlanilla`, {})
+    return this.http.put<any>(`${this.urlSolicitud}/solicitud/${codSolicitud}-${codPlani}/anularPlanilla`, {})
       .pipe(
         catchError(this.handleError)
       );
@@ -85,7 +86,7 @@ export class SolicitudService {
 
   getSolicitudPlanillaMovimiento(codSol: string) {
 
-    return this.http.get<SolicPlaniMov>(`${this.url}/consulta/${codSol}/solicitud`,
+    return this.http.get<SolicPlaniMov>(`${this.urlSolicitud}/consulta/${codSol}/solicitud`,
     )
       .pipe(
         catchError(this.handleError)
@@ -96,7 +97,7 @@ export class SolicitudService {
     let params = new HttpParams()
     params = params.append("codParametro", "TIPOSOLIN")
 
-    return this.http.get<ParametroList>(`${this.url}/consulta/parametros`,
+    return this.http.get<ParametroList>(`${this.urlSolicitud}/consulta/parametros`,
       {
         params: params
       }
@@ -111,7 +112,7 @@ export class SolicitudService {
     params = params.append("tipoSolicitud", tipoSolicitud)
     params = params.append("periodo", periodo)
 
-    return this.http.get<any>(`${this.url}/consulta/validarPeriodo`,
+    return this.http.get<any>(`${this.urlSolicitud}/consulta/validarPeriodo`,
       {
         params: params
       }
@@ -125,7 +126,7 @@ export class SolicitudService {
     let params = new HttpParams()
     params = params.append("tipoSolicitud", tipoSolicitud)
 
-    return this.http.get<Root<BandejaSolicitudCarga>>(`${this.urlTwo}/carga/solicitud`,
+    return this.http.get<Root<BandejaSolicitudCarga>>(`${this.urlCarga}/carga/solicitud`,
       {
         params: params
       })
@@ -140,7 +141,8 @@ export class SolicitudService {
       'ipUsuaCrea': ip
     });
 
-    return this.http.get(`${this.urlTwo}/carga/${codPlanilla}-${codSolicitud}/inconsistencias`,
+
+    return this.http.get(`${this.urlCarga}/carga/${codPlanilla}-${codSolicitud}/inconsistencias`,
       {
         headers: headers,
         responseType: 'blob'
@@ -153,13 +155,12 @@ export class SolicitudService {
 
   cargarPlanilla(codPlanilla: string, codSolicitud: number, usuario: string, ip: string, formData: FormData) {
 
-
     const headers = new HttpHeaders({
       'idUsuaCrea': usuario,
       'ipUsuaCrea': ip
     });
 
-    return this.http.post<any>(`${this.urlTwo}/carga/${codPlanilla}-${codSolicitud}/cargaPlanilla`,
+    return this.http.post<any>(`${this.urlCarga}/carga/${codPlanilla}-${codSolicitud}/cargaPlanilla`,
       formData, {
       headers: headers
     })
@@ -168,10 +169,47 @@ export class SolicitudService {
       );
   }
 
+  getBandejaCalculo(tipoSolicitud: string) {
+    let params = new HttpParams()
+    params = params.append("tipoSolicitud", tipoSolicitud)
 
+    return this.http.get<Root<BandejaSolicitudCalculo>>(`${this.urlCalculo}/calculo/solicitud`,
+      {
+        params: params
+      })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
+  calcularPlanilla(codPlanilla: string, codSolicitud: number, usuario: string, ip: string) {
 
+    const headers = new HttpHeaders({
+      'idUsuaCrea': usuario,
+      'ipUsuaCrea': ip
+    });
 
+    return this.http.post<any>(`${this.urlCalculo}/calculo/${codPlanilla}-${codSolicitud}/calcularPlanilla`,
+      {
+        headers: headers
+      })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  aprobarPlanilla(tipoSolicitud:string, codSolicitud: number, codPlanillas: string[]) {
+    let params = new HttpParams()
+    params = params.append("tiposPlanilla", codPlanillas.join(","))
+
+    return this.http.put<any>(`${this.urlCalculo}/calculo/${tipoSolicitud}-${codSolicitud}/aprobarPlanilla`, {
+      params:params
+      }
+    )
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

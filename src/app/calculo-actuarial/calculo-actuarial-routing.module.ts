@@ -11,11 +11,13 @@ import { SortableHeaderDirective } from './sortable-header.directive';
 import { CargaInformacionDiecinueveComponent } from './carga-informacion-diecinueve/carga-informacion-diecinueve.component';
 import { BandejaCargaDiecinueveComponent } from './carga-informacion-diecinueve/bandeja-carga-diecinueve/bandeja-carga-diecinueve.component';
 import { BandejaCalcularDiecinueveComponent } from './realizar-calculo/bandeja-calcular-diecinueve/bandeja-calcular-diecinueve.component';
+import {RevisarConsistenciarComponent} from "./revisar-consistenciar/revisar-consistenciar.component";
 
 const routes: Routes = [
   { path: 'solicitudBandeja', component: BandejaCalculoActuarialComponent },
   { path: 'cargaInformacionNoventa', component: BandejaCargaDiecinueveComponent },
-  { path: 'calcularInformacionNoventa', component: BandejaCalcularDiecinueveComponent },
+  { path: 'calcularInformacionNoventa', component:BandejaCalcularDiecinueveComponent},
+  { path: 'revisarConsistenciar', component:RevisarConsistenciarComponent}
 
 
   /*
