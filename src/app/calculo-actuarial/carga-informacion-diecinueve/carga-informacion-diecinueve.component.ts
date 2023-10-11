@@ -154,7 +154,7 @@ export class CargaInformacionDiecinueveComponent implements OnInit {
       }))
       .subscribe(result => {
         this.spinnerService.hide()
-        this.toastService.show('Se descargo el reporte de inconsistencias correctamente', { classname: 'bg-success text-white', delay: 3000, icon: 'check' })
+        this.toastService.show('Se descargó el reporte de inconsistencias correctamente', { classname: 'bg-success text-white', delay: 3000, icon: 'check' })
         const url = window.URL.createObjectURL(result);
         const a = document.createElement('a');
         a.setAttribute('style', 'display:none;');

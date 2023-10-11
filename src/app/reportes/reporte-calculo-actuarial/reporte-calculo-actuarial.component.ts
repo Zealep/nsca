@@ -11,6 +11,7 @@ import { catchError, EMPTY } from 'rxjs';
 import { BandejaSolicitud } from 'src/app/interfaces/bandeja-solicitud';
 import { ParametroList } from 'src/app/interfaces/param';
 import { GenerarReporteCalculoActuarialComponent } from '../generar-reporte-calculo-actuarial/generar-reporte-calculo-actuarial.component';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-reporte-calculo-actuarial',
@@ -18,6 +19,8 @@ import { GenerarReporteCalculoActuarialComponent } from '../generar-reporte-calc
   styleUrls: ['./reporte-calculo-actuarial.component.scss']
 })
 export class ReporteCalculoActuarialComponent {
+
+  title: string = ""
   currentPage: number = 1;
   itemsPerPage: number = 15;
   totalItems: number = 0;
@@ -36,8 +39,12 @@ export class ReporteCalculoActuarialComponent {
     private modal: NgbModal,
     private solicitudService: SolicitudService,
     private spinnerService: SpinnerOverlayService,
-    private toastService: ToastService
-  ) { }
+    private toastService: ToastService,
+    private sharedService: SharedService
+  ) {
+    this.sharedService.getTitle.subscribe(res => res != "" ? this.title = res : this.title = sessionStorage.getItem('title')!
+    )
+  }
 
   ngOnInit() {
     this.getTipoSolicitud()

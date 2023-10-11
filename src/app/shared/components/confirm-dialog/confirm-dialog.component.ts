@@ -26,6 +26,7 @@ export class ConfirmDialogComponent implements OnInit {
   cancelar() {
     this.modalActive.close(false);
   }
+
   /*
     constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public model: ConfirmDialogModel) { }

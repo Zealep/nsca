@@ -17,6 +17,7 @@ import {
   SortEvent,
   compare,
 } from '../sortable-header.directive';
+import { SharedService } from 'src/app/services/shared.service';
 
 
 @Component({
@@ -26,6 +27,7 @@ import {
 })
 export class BandejaCalculoActuarialComponent implements OnInit, OnDestroy {
 
+  title: string = ""
   currentPage: number = 1;
   itemsPerPage: number = 15;
   totalItems: number = 0;
@@ -48,10 +50,16 @@ export class BandejaCalculoActuarialComponent implements OnInit, OnDestroy {
     private modal: NgbModal,
     private solicitudService: SolicitudService,
     private spinnerService: SpinnerOverlayService,
-    private toastService: ToastService
-  ) { }
+    private toastService: ToastService,
+    private sharedSerive: SharedService
+  ) {
+    this.sharedSerive.getTitle.subscribe(res =>
+      res != "" ? this.title = res : this.title = sessionStorage.getItem('title')!
+    )
+  }
 
   ngOnInit() {
+
     this.getTipoSolicitud()
   }
 

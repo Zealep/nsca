@@ -10,6 +10,7 @@ import { COD_TIPO_SOLICITUD_1990 } from 'src/app/shared/var.constant';
 import { catchError, EMPTY } from 'rxjs';
 import { CalcularVerPlanillasComponent } from '../calcular-ver-planillas/calcular-ver-planillas.component';
 import { BandejaSolicitudCalculo } from 'src/app/interfaces/bandeja-solicitud-calculo';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-bandeja-calcular-diecinueve',
@@ -17,6 +18,8 @@ import { BandejaSolicitudCalculo } from 'src/app/interfaces/bandeja-solicitud-ca
   styleUrls: ['./bandeja-calcular-diecinueve.component.scss']
 })
 export class BandejaCalcularDiecinueveComponent {
+
+  title: string = ""
   currentPage: number = 1;
   itemsPerPage: number = 10;
 
@@ -29,7 +32,11 @@ export class BandejaCalcularDiecinueveComponent {
     private modal: NgbModal,
     private solicitudService: SolicitudService,
     private spinnerService: SpinnerOverlayService,
-    private toastService: ToastService) { }
+    private toastService: ToastService,
+    private sharedService: SharedService) {
+    this.sharedService.getTitle.subscribe(res => res != "" ? this.title = res : this.title = sessionStorage.getItem('title')!
+    )
+  }
 
   ngOnInit() {
     this.getSearchBandeja()

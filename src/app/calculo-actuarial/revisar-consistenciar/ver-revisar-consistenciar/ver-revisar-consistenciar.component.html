@@ -1,4 +1,3 @@
-<script src="calcular-ver-planillas.component.ts"></script>
 <div class="container p-3">
 
   <div>
@@ -46,7 +45,7 @@
             <td class="text-center">{{p.numIncosPla}}
             </td>
             <td class="text-center">
-              <button class="btn btn-primary btn-sm"
+              <button *ngIf="p.indExisIncon == 'S'"  class="btn btn-primary btn-sm"
                       (click)="descargar(p.codTipPla)">
                 <i class="fa-solid fa-download"></i>
               </button>

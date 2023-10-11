@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthenticationService } from '../services/auth/authentication.service';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,11 @@ export class HeaderComponent implements OnInit {
   nombre!: string
   usuario!: string
 
-  constructor(private authService: AuthenticationService) { }
+
+  constructor(private authService: AuthenticationService,
+    private sharedService: SharedService) {
+
+  }
 
   ngOnInit(): void {
     this.nombre = sessionStorage.getItem('nombre')!

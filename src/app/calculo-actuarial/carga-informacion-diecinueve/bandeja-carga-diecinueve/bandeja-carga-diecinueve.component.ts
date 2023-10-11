@@ -10,6 +10,7 @@ import { CargaInformacionDiecinueveComponent } from '../carga-informacion-diecin
 import { Router } from '@angular/router';
 import { BandejaSolicitudCarga } from 'src/app/interfaces/bandeja-solicitud-carga';
 import { COD_TIPO_SOLICITUD_1990 } from 'src/app/shared/var.constant';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-bandeja-carga-diecinueve',
@@ -18,6 +19,7 @@ import { COD_TIPO_SOLICITUD_1990 } from 'src/app/shared/var.constant';
 })
 export class BandejaCargaDiecinueveComponent implements OnInit {
 
+  title: string = ""
   currentPage: number = 1;
   itemsPerPage: number = 10;
 
@@ -30,7 +32,11 @@ export class BandejaCargaDiecinueveComponent implements OnInit {
     private modal: NgbModal,
     private solicitudService: SolicitudService,
     private spinnerService: SpinnerOverlayService,
-    private toastService: ToastService) { }
+    private toastService: ToastService,
+    private sharedService: SharedService) {
+    this.sharedService.getTitle.subscribe(res => res != "" ? this.title = res : this.title = sessionStorage.getItem('title')!
+    )
+  }
 
   ngOnInit() {
     this.getSearchBandeja()

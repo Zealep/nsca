@@ -11,13 +11,17 @@ import { SortableHeaderDirective } from './sortable-header.directive';
 import { CargaInformacionDiecinueveComponent } from './carga-informacion-diecinueve/carga-informacion-diecinueve.component';
 import { BandejaCargaDiecinueveComponent } from './carga-informacion-diecinueve/bandeja-carga-diecinueve/bandeja-carga-diecinueve.component';
 import { BandejaCalcularDiecinueveComponent } from './realizar-calculo/bandeja-calcular-diecinueve/bandeja-calcular-diecinueve.component';
-import {RevisarConsistenciarComponent} from "./revisar-consistenciar/revisar-consistenciar.component";
+import { RevisarConsistenciarComponent } from "./revisar-consistenciar/revisar-consistenciar.component";
+import { BandejaExtrapolarComponent } from "./extrapolar-resultados/bandeja-extrapolar/bandeja-extrapolar.component";
+import { BandejaAprobarComponent } from './aprobar-calculo/bandeja-aprobar/bandeja-aprobar.component';
 
 const routes: Routes = [
   { path: 'solicitudBandeja', component: BandejaCalculoActuarialComponent },
   { path: 'cargaInformacionNoventa', component: BandejaCargaDiecinueveComponent },
-  { path: 'calcularInformacionNoventa', component:BandejaCalcularDiecinueveComponent},
-  { path: 'revisarConsistenciar', component:RevisarConsistenciarComponent}
+  { path: 'calcularInformacionNoventa', component: BandejaCalcularDiecinueveComponent },
+  { path: 'revisarConsistenciar', component: RevisarConsistenciarComponent },
+  { path: 'extrapolarContingencias', component: BandejaExtrapolarComponent },
+  { path: 'aprobarCalculo', component: BandejaAprobarComponent }
 
 
   /*

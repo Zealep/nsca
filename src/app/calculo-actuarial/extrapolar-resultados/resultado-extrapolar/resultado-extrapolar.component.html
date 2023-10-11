@@ -1,0 +1,94 @@
+<div class="container p-3">
+
+  <div>
+    <img src="./assets/images/icon-user.svg" class="me-2" width="20px" height="20px">
+    <span class="title-form"><strong>Solicitud N° </strong></span>
+    <span class="ms-5">Usuario: {{usuario}}</span>
+  </div>
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-6">
+        <label for="tipoSolicitud" class="form-label">Tipo de Solicitud</label>
+        <input type="text" class="form-control" id="tipoSolicitud" value="" disabled
+               readonly>
+      </div>
+
+      <div class="col-6">
+        <label for="periodo" class="form-label">Periodo de Cálculo</label>
+        <input type="text" class="form-control" id="periodo" value="" disabled readonly>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <label for="tipoPlanilla" class="form-label">Planilla</label>
+          <input type="text" class="form-control" id="tipoPlanilla" value="" disabled
+                 readonly>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row mt-3" >
+
+      <div class="col-12">
+        <label for="infoCalculo" class="form-label">Información del Cálculo</label>
+        <table class="table table-sm table-bordered" id="infoCalculo">
+          <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Valor</th>
+
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+<!--          <tr *ngFor="let p of solicitud.planilla">-->
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+
+      <div class="col-12">
+        <label for="resulProce" class="form-label">Resultado Proceso de Extrapolación</label>
+        <table class="table table-sm table-bordered" id="resulProce">
+          <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Valor</th>
+
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+<!--          <tr *ngFor="let p of solicitud.planilla">-->
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+          </tr>
+
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+
+    <button class="btn btn-primary btn-sm ms-2" (click)="aceptar()">Aceptar</button>
+    <button class="btn btn-primary btn-sm ms-2" (click)="cerrar()">Cerrar</button>
+
+  </div>
+
+</div>

@@ -94,21 +94,21 @@ export class CalcularVerPlanillasComponent {
         })
     }
 
-    dialogAprobar() {
+    dialogAprobar(codTipPla:string,desTipPla:string) {
         const modalRef = this.modal.open(ConfirmDialogComponent)
         modalRef.componentInstance.message = `¿Está seguro que  desea aprobar el cálculo de la reserva  de la solicitud N° ${this.solicitud.idSolicitud} ?`;
 
         modalRef.closed.subscribe(result => {
             if (result) {
-                this.aprobar();
+                this.aprobar(codTipPla,desTipPla);
             }
         })
     }
 
-    aprobar() {
-        const planillas: string[] = ['01', '02', '03', '04']
+    aprobar(codTipPla:string,desTipPla:string) {
+        // const planillas: string[] = ['01', '02', '03', '04']
         this.spinnerService.show()
-        this.solicitudService.aprobarPlanilla(this.solicitud.tipoSolicitud, this.solicitud.idSolicitud, planillas)
+        this.solicitudService.aprobarPlanilla(this.solicitud.tipoSolicitud, this.solicitud.idSolicitud, codTipPla)
             .pipe(catchError(error => {
                 this.spinnerService.hide()
                 this.toastService.show(error, {classname: 'bg-danger text-white', delay: 3000, icon: 'ban'})
@@ -117,10 +117,10 @@ export class CalcularVerPlanillasComponent {
             .subscribe(res => {
                 this.spinnerService.hide()
                 if (res.indAprobacion === '1') {
-                    this.toastService.show(`Se realizo la aprobación de la solicitud N° ${this.solicitud.idSolicitud} correctamente`, {classname: 'bg-success text-white', delay: 3000, icon: 'check'})
+                    this.toastService.show(`Se realizo la aprobación de la planilla ${desTipPla} correctamente`, {classname: 'bg-success text-white', delay: 3000, icon: 'check'})
                 }
                 else{
-                    this.toastService.show(`No se pudo realizar la aprobación de la solicitud N° ${this.solicitud.idSolicitud}`, {classname: 'bg-danger text-white', delay: 3000, icon: 'ban'})
+                    this.toastService.show(`No se pudo realizar la aprobación de la planilla ${desTipPla}`, {classname: 'bg-danger text-white', delay: 3000, icon: 'ban'})
                 }
             })
     }

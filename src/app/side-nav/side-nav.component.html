@@ -16,7 +16,7 @@
 
           <li class="nested-list-li" *ngFor="let h of p.hijos">
             <div class="d-flex">
-              <a [routerLink]="p.accion+h.accion">{{h.nombre}}</a>
+              <a [routerLink]="p.accion+h.accion" (click)="verRuta(p.nombre,h.nombre)">{{h.nombre}}</a>
             </div>
           </li>
         </ul>

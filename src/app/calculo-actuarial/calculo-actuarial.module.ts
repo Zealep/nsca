@@ -22,11 +22,15 @@ import { BandejaCalcularDiecinueveComponent } from './realizar-calculo/bandeja-c
 import { CalcularVerPlanillasComponent } from './realizar-calculo/calcular-ver-planillas/calcular-ver-planillas.component';
 import { RevisarConsistenciarComponent } from './revisar-consistenciar/revisar-consistenciar.component';
 import { VerRevisarConsistenciarComponent } from './revisar-consistenciar/ver-revisar-consistenciar/ver-revisar-consistenciar.component';
+import { BandejaExtrapolarComponent } from './extrapolar-resultados/bandeja-extrapolar/bandeja-extrapolar.component';
+import { VerExtrapolarComponent } from './extrapolar-resultados/ver-extrapolar/ver-extrapolar.component';
+import { ResultadoExtrapolarComponent } from './extrapolar-resultados/resultado-extrapolar/resultado-extrapolar.component';
+import { BandejaAprobarComponent } from './aprobar-calculo/bandeja-aprobar/bandeja-aprobar.component';
 
 
 @NgModule({
   declarations: [BandejaCalculoActuarialComponent, RegistrarSolicitudComponent, VerDetalleSolicitudComponent, VerDetalleParametrosComponent, VerDetalleMovimientosComponent, AnularPlanillasComponent, AnularSolicitudComponent, CargaInformacionDiecinueveComponent, BandejaCargaDiecinueveComponent,
-    SortableHeaderDirective, DndDirective, BandejaCalcularDiecinueveComponent, CalcularVerPlanillasComponent, RevisarConsistenciarComponent, VerRevisarConsistenciarComponent],
+    SortableHeaderDirective, DndDirective, BandejaCalcularDiecinueveComponent, CalcularVerPlanillasComponent, RevisarConsistenciarComponent, VerRevisarConsistenciarComponent, BandejaExtrapolarComponent, VerExtrapolarComponent, ResultadoExtrapolarComponent, BandejaAprobarComponent],
   imports: [
     CommonModule,
     CalculoActuarialRoutingModule,

@@ -24,6 +24,11 @@ const routes: Routes = [
         path: 'reportes', loadChildren: () =>
           import('./reportes/reportes.module').then(m => m.ReportesModule),
         canLoad: [AuthGaurdService],
+      },
+      {
+        path: 'parametros', loadChildren: () =>
+          import('./parametros/parametros.module').then(m => m.ParametrosModule),
+        canLoad: [AuthGaurdService],
       }
     ]
 

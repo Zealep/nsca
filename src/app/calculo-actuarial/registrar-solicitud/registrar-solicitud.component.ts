@@ -68,8 +68,6 @@ export class RegistrarSolicitudComponent implements OnInit {
         this.listaParametros = x
       })
   }
-
-
   guardar() {
 
     const tipoSoliciutd = this.form.get('tipoSolicitud')?.value;

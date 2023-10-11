@@ -10,6 +10,7 @@ import { ParametroList } from '../interfaces/param';
 import { BandejaSolicitudCarga } from '../interfaces/bandeja-solicitud-carga';
 import { environment } from 'src/environments/environment';
 import { BandejaSolicitudCalculo } from '../interfaces/bandeja-solicitud-calculo';
+import { BandejaSolicitudRevisar } from "../interfaces/bandeja-solicitud-revisar";
 
 @Injectable({
   providedIn: 'root'
@@ -198,14 +199,42 @@ export class SolicitudService {
       );
   }
 
-  aprobarPlanilla(tipoSolicitud:string, codSolicitud: number, codPlanillas: string[]) {
+  aprobarPlanilla(tipoSolicitud: string, codSolicitud: number, codPlanilla: string) {
     let params = new HttpParams()
-    params = params.append("tiposPlanilla", codPlanillas.join(","))
+    params = params.append("tiposPlanilla", codPlanilla)
 
     return this.http.put<any>(`${this.urlCalculo}/calculo/${tipoSolicitud}-${codSolicitud}/aprobarPlanilla`, {
-      params:params
-      }
+      params: params
+    }
     )
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getBandejaRevisar(tipoSolicitud: string) {
+    let params = new HttpParams()
+    params = params.append("tipoSolicitud", tipoSolicitud)
+
+    return this.http.get<Root<BandejaSolicitudRevisar>>(`${this.urlCarga}/carga/solicitudrevisar`,
+      {
+        params: params
+      })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  cerrarPlanilla(tipoPlanilla: string, codSolicitud: number, usuario: string, ip: string) {
+
+    const headers = new HttpHeaders({
+      'idUsuaCrea': usuario,
+      'ipUsuaCrea': ip
+    });
+
+    return this.http.put<any>(`${this.urlCarga}/carga/${tipoPlanilla}-${codSolicitud}/cerrarPlanilla`, null, {
+      headers: headers,
+    })
       .pipe(
         catchError(this.handleError)
       );
