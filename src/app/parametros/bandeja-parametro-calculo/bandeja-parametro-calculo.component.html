@@ -34,11 +34,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>CANTMESESRESTCONS</td>
-          <td>RESTA LOS MESES A CONSOLIDAR LAS APORTACIONES Y GUARDA EL INDICADOR DE ACTUALIZACION DE APORTANTES</td>
-          <td>19990</td>
-          <td class="text-center"><button class="btn btn-primary btn-sm" (click)="verValores('test')">
+        <tr *ngFor="let p of sortBandeja.items">
+          <td>{{p.idTabl}}</td>
+          <td>{{p.txDesc}}</td>
+          <td>{{p.descTiRegi}}</td>
+          <td class="text-center"><button class="btn btn-primary btn-sm" (click)="verValores(p)">
               <i class="fa-solid fa-magnifying-glass"></i>
             </button>
           </td>

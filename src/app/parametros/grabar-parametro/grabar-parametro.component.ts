@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerOverlayService } from 'src/app/services/overlay.service';
 import { ParametroService } from 'src/app/services/parametro.service';
 import { SolicitudService } from 'src/app/services/solicitud.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { BandejaParametro } from '../../interfaces/bandeja-parametros';
+import { Valor } from 'src/app/interfaces/valort';
 
 @Component({
   selector: 'app-grabar-parametro',
@@ -13,6 +15,8 @@ import { ToastService } from 'src/app/services/toast.service';
 })
 export class GrabarParametroComponent {
 
+  @Input() solicitud!: BandejaParametro
+  @Input() valor!: Valor
   usuario!: string
 
 

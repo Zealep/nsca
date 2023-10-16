@@ -190,7 +190,7 @@ export class SolicitudService {
       'ipUsuaCrea': ip
     });
 
-    return this.http.post<any>(`${this.urlCalculo}/calculo/${codPlanilla}-${codSolicitud}/calcularPlanilla`,
+    return this.http.post<any>(`${this.urlCalculo}/calculo/${codPlanilla}-${codSolicitud}/calcularPlanilla`, null,
       {
         headers: headers
       })

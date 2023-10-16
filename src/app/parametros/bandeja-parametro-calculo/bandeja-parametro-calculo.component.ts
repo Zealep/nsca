@@ -12,6 +12,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { ValorParametroComponent } from '../valor-parametro/valor-parametro.component';
 import { BandejaSolicitudRevisar } from 'src/app/interfaces/bandeja-solicitud-revisar';
 import { Router } from '@angular/router';
+import { BandejaParametro } from 'src/app/interfaces/bandeja-parametros';
 
 @Component({
   selector: 'app-bandeja-parametro-calculo',
@@ -32,8 +33,8 @@ export class BandejaParametroCalculoComponent {
     items: []
   }
 
-  bandeja: Root<BandejaSolicitudRevisar> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
-  sortBandeja: Root<BandejaSolicitudRevisar> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
+  bandeja: Root<BandejaParametro> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
+  sortBandeja: Root<BandejaParametro> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
 
   constructor(private router: Router,
     private modal: NgbModal,
@@ -80,7 +81,8 @@ export class BandejaParametroCalculoComponent {
     this.spinnerService.show()
 
 
-    this.parametroService.getBandejaParametro(this.tipoSolicitud, this.parametro, this.descripcion, this.currentPage, this.itemsPerPage)
+    //this.parametroService.getBandejaParametro(this.tipoSolicitud, this.parametro, this.descripcion, this.currentPage, this.itemsPerPage)
+    this.parametroService.getBandejaParametro('19990', 'TASAREEM19', 'TASA', 1, 10)
       .pipe(catchError(error => {
         this.spinnerService.hide()
         this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
@@ -95,7 +97,7 @@ export class BandejaParametroCalculoComponent {
 
   }
 
-  verValores(a: any) {
+  verValores(a: BandejaParametro) {
     const modalRef = this.modal.open(ValorParametroComponent,
       {
         size: 'lg'

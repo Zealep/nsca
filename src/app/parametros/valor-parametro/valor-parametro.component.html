@@ -2,7 +2,7 @@
 
   <div>
     <img src="./assets/images/icon-user.svg" class="me-2" width="20px" height="20px">
-    <span class="title-form"><strong>Regimen {{solicitud.desTipoSolicitud}}</strong></span>
+    <span class="title-form"><strong>Regimen {{solicitud.tiRegi}}</strong></span>
     <span class="ms-5">Usuario: {{usuario}}</span>
   </div>
 
@@ -10,13 +10,12 @@
     <div class="row">
       <div class="col-6">
         <label for="idParametro" class="form-label">ID PARÁMETRO</label>
-        <input type="text" class="form-control" id="idParametro" value="{{solicitud.desTipoSolicitud}}" disabled
-          readonly>
+        <input type="text" class="form-control" id="idParametro" value="{{solicitud.idTabl}}" disabled readonly>
       </div>
 
       <div class="col-6">
         <label for="parametro" class="form-label">PARÁMETRO</label>
-        <input type="text" class="form-control" id="parametro" value="{{solicitud.anhoCalculo}}" disabled readonly>
+        <input type="text" class="form-control" id="parametro" value="{{solicitud.txDesc}}" disabled readonly>
       </div>
 
     </div>
@@ -28,18 +27,25 @@
         <table class="table table-sm table-bordered" id="valores">
           <thead>
             <tr>
-              <th></th>
+              <th>ID VALOR</th>
+              <th *ngFor="let d of solicitud.valores[0].detalle">
+                {{d.vlCamp.split("|")[0]}}
+              </th>
               <th>Editar Valor</th>
             </tr>
           </thead>
           <tbody>
 
-            <tr *ngFor="let p of solicitud.planilla">
-              <td class="text-center"></td>
-
+            <tr *ngFor="let p of solicitud.valores; index as i">
               <td class="text-center">
-                <button class="btn btn-primary btn-sm" (click)="editar(p.codTipPla)">
-                  <i class="fa-solid fa-circle-xmark"></i>
+                {{p.vlCamp}}
+              </td>
+              <td *ngFor="let v of p.detalle">
+                {{v.vlCamp.split("|")[2]}}
+              </td>
+              <td class="text-center">
+                <button class="btn btn-primary btn-sm" (click)="editar(p)">
+                  <i class="fa-solid fa-pen"></i>
                 </button>
               </td>
 

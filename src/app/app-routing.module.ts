@@ -26,7 +26,7 @@ const routes: Routes = [
         canLoad: [AuthGaurdService],
       },
       {
-        path: 'parametros', loadChildren: () =>
+        path: 'configuracion', loadChildren: () =>
           import('./parametros/parametros.module').then(m => m.ParametrosModule),
         canLoad: [AuthGaurdService],
       }

@@ -5,13 +5,14 @@ import { BandejaSolicitud } from '../interfaces/bandeja-solicitud';
 import { Root } from '../interfaces/root';
 import { catchError, throwError } from 'rxjs';
 import { BandejaSolicitudRevisar } from '../interfaces/bandeja-solicitud-revisar';
+import { BandejaParametro } from '../interfaces/bandeja-parametros';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParametroService {
 
-  private urlSolicitud: string = `${environment.hostSolicitud}`;
+  private urlSolicitud: string = `${environment.mock}`;
 
 
   constructor(
@@ -19,17 +20,17 @@ export class ParametroService {
 
   }
 
-  getBandejaParametro(tipoSolicitud: string, idParametro: string, descripcion: string, numPag: number, numRegPorPag: number) {
+  getBandejaParametro(tipoRegimen: string, idTabla: string, descripcion: string, numPag: number, numRegPorPag: number) {
     let params = new HttpParams()
 
-    params = params.append("tipoSolicitud", tipoSolicitud)
-    params = params.append("idParametro", idParametro)
-    params = params.append("descripcion", descripcion)
+    params = params.append("tiRegimen", tipoRegimen)
+    params = params.append("idTabla", idTabla)
+    params = params.append("desParam", descripcion)
 
     params = params.append("numPag", numPag)
     params = params.append("numRegPorPag", numRegPorPag)
 
-    return this.http.get<Root<BandejaSolicitudRevisar>>(`${this.urlSolicitud}/consulta/solicitud`,
+    return this.http.get<Root<BandejaParametro>>(`${this.urlSolicitud}/consulta/listarParametros`,
       {
         params: params
       })

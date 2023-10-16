@@ -9,6 +9,8 @@ import { ToastService } from 'src/app/services/toast.service';
 import { GrabarParametroComponent } from '../grabar-parametro/grabar-parametro.component';
 import { BandejaSolicitudRevisar } from 'src/app/interfaces/bandeja-solicitud-revisar';
 import { Router } from '@angular/router';
+import { BandejaParametro } from 'src/app/interfaces/bandeja-parametros';
+import { Valor } from 'src/app/interfaces/valort';
 
 @Component({
   selector: 'app-valor-parametro',
@@ -18,7 +20,7 @@ import { Router } from '@angular/router';
 export class ValorParametroComponent {
   usuario!: string
 
-  @Input() solicitud!: BandejaSolicitudRevisar
+  @Input() solicitud!: BandejaParametro
 
   constructor(private router: Router,
     private activeModal: NgbActiveModal,
@@ -46,11 +48,12 @@ export class ValorParametroComponent {
     })
   }
 
-  editar(p: string) {
+  editar(p: Valor) {
     const modalRef = this.modal.open(GrabarParametroComponent,
       {
         size: 'lg'
       });
+    modalRef.componentInstance.valor = p
     modalRef.componentInstance.solicitud = this.solicitud
     modalRef.closed.subscribe(x => {
 
