@@ -29,6 +29,10 @@ const routes: Routes = [
         path: 'configuracion', loadChildren: () =>
           import('./parametros/parametros.module').then(m => m.ParametrosModule),
         canLoad: [AuthGaurdService],
+      },
+      {
+        path: 'flujoCaja', loadChildren: () =>
+          import('./flujo-caja/flujo-caja.module').then(m => m.FlujoCajaModule),
       }
     ]
 

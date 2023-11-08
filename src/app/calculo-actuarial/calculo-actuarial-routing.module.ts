@@ -14,6 +14,7 @@ import { BandejaCalcularDiecinueveComponent } from './realizar-calculo/bandeja-c
 import { RevisarConsistenciarComponent } from "./revisar-consistenciar/revisar-consistenciar.component";
 import { BandejaExtrapolarComponent } from "./extrapolar-resultados/bandeja-extrapolar/bandeja-extrapolar.component";
 import { BandejaAprobarComponent } from './aprobar-calculo/bandeja-aprobar/bandeja-aprobar.component';
+import { BandejaParametroMoresperanzaComponent } from '../parametros/mortalidad-esperanza/bandeja-parametro-moresperanza/bandeja-parametro-moresperanza.component';
 
 const routes: Routes = [
   { path: 'solicitudBandeja', component: BandejaCalculoActuarialComponent },
@@ -21,16 +22,8 @@ const routes: Routes = [
   { path: 'calcularInformacionNoventa', component: BandejaCalcularDiecinueveComponent },
   { path: 'revisarConsistenciar', component: RevisarConsistenciarComponent },
   { path: 'extrapolarContingencias', component: BandejaExtrapolarComponent },
-  { path: 'aprobarCalculo', component: BandejaAprobarComponent }
-
-
-  /*
-  { path: 'ver-detalle-solicitud/:codSolicitud', component: VerDetalleSolicitudComponent },
-  { path: 'ver-detalle-parametros/:codSolicitud', component: VerDetalleParametrosComponent },
-  { path: 'ver-detalle-movimientos/:codSolicitud', component: VerDetalleMovimientosComponent },
-  { path: 'anular-planillas/:codSolicitud', component: AnularPlanillasComponent },
-  { path: 'anular-solicitud/:codSolicitud', component: AnularSolicitudComponent }
-  */
+  { path: 'aprobarCalculo', component: BandejaAprobarComponent },
+  { path: 'cargaInformacionEstImpact', component: BandejaParametroMoresperanzaComponent }
 
 ];
 

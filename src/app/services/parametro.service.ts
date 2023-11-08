@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BandejaSolicitud } from '../interfaces/bandeja-solicitud';
@@ -6,13 +6,14 @@ import { Root } from '../interfaces/root';
 import { catchError, throwError } from 'rxjs';
 import { BandejaSolicitudRevisar } from '../interfaces/bandeja-solicitud-revisar';
 import { BandejaParametro } from '../interfaces/bandeja-parametros';
+import { ParametroRequest } from '../interfaces/parametro-request';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParametroService {
 
-  private urlSolicitud: string = `${environment.mock}`;
+  private urlSolicitud: string = `${environment.hostSolicitud}`;
 
 
   constructor(
@@ -24,16 +25,32 @@ export class ParametroService {
     let params = new HttpParams()
 
     params = params.append("tiRegimen", tipoRegimen)
-    params = params.append("idTabla", idTabla)
+    params = params.append("tabla", idTabla)
     params = params.append("desParam", descripcion)
 
     params = params.append("numPag", numPag)
     params = params.append("numRegPorPag", numRegPorPag)
 
-    return this.http.get<Root<BandejaParametro>>(`${this.urlSolicitud}/consulta/listarParametros`,
+    return this.http.get<Root<BandejaParametro>>(`${this.urlSolicitud}/parametros/listarParametros`,
       {
         params: params
       })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+  //http://onp.peru/v1/calculoactuarial/parametros/{idTabla}-{idCod}/actualizarParametro?idCamp=1&tiTipoCamp=1&vlCamp=valor
+  updateParametros(idTabla: string, idCod: string, req: ParametroRequest) {
+
+    return this.http.put<any>(`${this.urlSolicitud}/parametros/${idTabla}-${idCod}/actualizarParametro`, req)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  saveParametros(idTabla: string, idCod: string, req: ParametroRequest) {
+
+    return this.http.put<any>(`${this.urlSolicitud}/parametros/${idTabla}-${idCod}/registrarParametro`, req)
       .pipe(
         catchError(this.handleError)
       );

@@ -56,8 +56,11 @@ export class LoginComponent {
       },
       error => {
         this.spinnerService.hide()
+        /*
         this.invalidLogin = true
         this.error = error.error.message;
+*/
+        this.toastService.show('Usuario o contraseña incorrectos', { classname: 'bg-danger text-white', delay: 4000, icon: 'ban' })
 
       }
     )

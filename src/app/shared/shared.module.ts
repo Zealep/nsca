@@ -5,13 +5,11 @@ import { RouterModule } from '@angular/router';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { NgbToast } from '@ng-bootstrap/ng-bootstrap';
 import { ToastGlobalComponent } from './components/toast-global/toast-global.component';
-
-
-
+import { MessageOkComponent } from './components/message-ok/message-ok.component';
 
 @NgModule({
   declarations: [
-    ConfirmDialogComponent, ToastGlobalComponent
+    ConfirmDialogComponent, ToastGlobalComponent, MessageOkComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +20,8 @@ import { ToastGlobalComponent } from './components/toast-global/toast-global.com
   ],
   exports: [
     ConfirmDialogComponent,
-    ToastGlobalComponent
+    ToastGlobalComponent,
+    MessageOkComponent
   ],
 
 

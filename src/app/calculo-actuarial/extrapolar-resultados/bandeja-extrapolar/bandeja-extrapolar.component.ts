@@ -14,6 +14,7 @@ import {
 import { BandejaSolicitudRevisar } from "../../../interfaces/bandeja-solicitud-revisar";
 import { VerExtrapolarComponent } from "../ver-extrapolar/ver-extrapolar.component";
 import { SharedService } from 'src/app/services/shared.service';
+import { BandejaExtrapolar } from 'src/app/interfaces/bandeja-extrapolar';
 
 @Component({
   selector: 'app-bandeja-extrapolar',
@@ -28,7 +29,7 @@ export class BandejaExtrapolarComponent {
 
   periodo: string = ''
 
-  bandeja: Root<BandejaSolicitudRevisar> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
+  bandeja: Root<BandejaExtrapolar> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
 
 
   constructor(private router: Router,
@@ -48,7 +49,7 @@ export class BandejaExtrapolarComponent {
   getSearchBandeja() {
 
     this.spinnerService.show()
-    this.solicitudService.getBandejaRevisar(COD_TIPO_SOLICITUD_1990)
+    this.solicitudService.getBandejaExtrapolar(COD_TIPO_SOLICITUD_1990)
       .pipe(catchError(error => {
         this.spinnerService.hide()
         this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
@@ -61,7 +62,7 @@ export class BandejaExtrapolarComponent {
 
   }
 
-  verExtrapolar(solicitud: BandejaSolicitudRevisar) {
+  verExtrapolar(solicitud: BandejaExtrapolar) {
     const modalRef = this.modal.open(VerExtrapolarComponent,
       {
         size: 'lg'

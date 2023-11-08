@@ -11,6 +11,7 @@ import { BandejaSolicitudRevisar } from 'src/app/interfaces/bandeja-solicitud-re
 import { Router } from '@angular/router';
 import { BandejaParametro } from 'src/app/interfaces/bandeja-parametros';
 import { Valor } from 'src/app/interfaces/valort';
+import { EditarParametroComponent } from '../editar-parametro/editar-parametro.component';
 
 @Component({
   selector: 'app-valor-parametro',
@@ -44,19 +45,19 @@ export class ValorParametroComponent {
       });
     modalRef.componentInstance.solicitud = this.solicitud
     modalRef.closed.subscribe(x => {
-
+      this.cerrar()
     })
   }
 
   editar(p: Valor) {
-    const modalRef = this.modal.open(GrabarParametroComponent,
+    const modalRef = this.modal.open(EditarParametroComponent,
       {
         size: 'lg'
       });
     modalRef.componentInstance.valor = p
     modalRef.componentInstance.solicitud = this.solicitud
     modalRef.closed.subscribe(x => {
-
+      this.cerrar()
     })
   }
 

@@ -1,0 +1,63 @@
+<div class="container p-3">
+
+  <div>
+    <img src="./assets/images/icon-user.svg" class="me-2" width="20px" height="20px">
+    <span class="title-form"><strong>Regimen </strong></span>
+    <span class="ms-5">Usuario: {{usuario}}</span>
+  </div>
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-6">
+        <label for="idParametro" class="form-label">ID PARÁMETRO</label>
+        <input type="text" class="form-control" id="idParametro" value="{{this.solicitud.idTabl}}" disabled readonly>
+      </div>
+
+      <div class="col-6">
+        <label for="parametro" class="form-label">PARÁMETRO</label>
+        <input type="text" class="form-control" id="parametro" value="{{solicitud.txDesc}}" disabled readonly>
+      </div>
+
+      <div class="col-6">
+        <label for="parametro" class="form-label">ID VALOR</label>
+        <input type="text" class="form-control" id="parametro" [(ngModel)]="idValor">
+      </div>
+    </div>
+
+    <div class="my-3">
+      <span><b>VALORES A GUARDAR:</b></span>
+
+    </div>
+
+    <form [formGroup]="formulario" (ngSubmit)="grabar()">
+      <div *ngFor="let campo of campos">
+        <div class="form-group">
+          <label for="{{ campo.label }}">{{ campo.label }}</label>
+          <ng-container [ngSwitch]="campo.tipo">
+            <input *ngSwitchCase="1" [id]="campo.label" [formControlName]="campo.label" type="number"
+              class="form-control">
+            <input *ngSwitchCase="2" [id]="campo.label" [formControlName]="campo.label" type="text"
+              class="form-control">
+            <input *ngSwitchCase="3" [id]="campo.label" [formControlName]="campo.label" type="email"
+              class="form-control">
+            <input *ngSwitchCase="4" [id]="campo.label" [formControlName]="campo.label" type="date"
+              class="form-control">
+            <div *ngSwitchCase="5" class="form-check">
+              <input [id]="campo.label" [formControlName]="campo.label" type="checkbox" class="form-check-input">
+              <label [for]="campo.label" class="form-check-label">{{ campo.label }}</label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </form>
+
+
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <button class="btn btn-primary btn-sm ms-2" (click)="grabar()">Guardar</button>
+    <button class="btn btn-primary btn-sm ms-2" (click)="cerrar()">Cerrar</button>
+
+  </div>
+
+</div>

@@ -4,6 +4,7 @@ import { catchError, map } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
+import { SISTEMA_LOGIN } from '../../shared/var.constant';
 
 export class User {
   constructor(public status: string) { }
@@ -27,7 +28,7 @@ export class AuthenticationService {
     })
 
     return this.httpClient
-      .post<any>(`${environment.mock}/usuario/login`, { usuario, clave },)
+      .post<any>(`${environment.hostLogin}/login/token`, { usuario, clave, sistema: SISTEMA_LOGIN },)
       .pipe(
         map(userData => {
           sessionStorage.setItem("token", userData.token);

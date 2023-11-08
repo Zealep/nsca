@@ -75,7 +75,7 @@ export class BandejaAprobarComponent {
 
     modalRef.closed.subscribe(result => {
       if (result) {
-
+        alert('En construccion!!!')
       }
     })
   }

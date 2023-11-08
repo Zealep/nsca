@@ -1,36 +1,28 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BandejaSolicitudCarga } from 'src/app/interfaces/bandeja-solicitud-carga';
+import { EMPTY, catchError } from 'rxjs';
+import { BandejaSolicitud } from 'src/app/interfaces/bandeja-solicitud';
 import { Root } from 'src/app/interfaces/root';
+import { GenerarReporteCalculoActuarialComponent } from 'src/app/reportes/generar-reporte-calculo-actuarial/generar-reporte-calculo-actuarial.component';
 import { SpinnerOverlayService } from 'src/app/services/overlay.service';
+import { SharedService } from 'src/app/services/shared.service';
 import { SolicitudService } from 'src/app/services/solicitud.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { COD_TIPO_SOLICITUD_1990 } from 'src/app/shared/var.constant';
-import { catchError, EMPTY } from 'rxjs';
-import { BandejaSolicitud } from 'src/app/interfaces/bandeja-solicitud';
-import { ParametroList } from 'src/app/interfaces/param';
-import { GenerarReporteCalculoActuarialComponent } from '../generar-reporte-calculo-actuarial/generar-reporte-calculo-actuarial.component';
-import { SharedService } from 'src/app/services/shared.service';
+import { MessageOkComponent } from 'src/app/shared/components/message-ok/message-ok.component';
 
 @Component({
-  selector: 'app-reporte-calculo-actuarial',
-  templateUrl: './reporte-calculo-actuarial.component.html',
-  styleUrls: ['./reporte-calculo-actuarial.component.scss']
+  selector: 'app-bandeja-dl-diecinueve',
+  templateUrl: './bandeja-dl-diecinueve.component.html',
+  styleUrls: ['./bandeja-dl-diecinueve.component.scss']
 })
-export class ReporteCalculoActuarialComponent {
+export class BandejaDlDiecinueveComponent {
 
   title: string = ""
   currentPage: number = 1;
   itemsPerPage: number = 15;
   totalItems: number = 0;
 
-  tipoSolicitud: string = ''
-  periodo: string = ''
-
-  listaParametros: ParametroList = {
-    items: []
-  }
 
   bandeja: Root<BandejaSolicitud> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
   sortBandeja: Root<BandejaSolicitud> = { paginacion: { totalRegistros: 0, page: 1, per_page: 15 }, items: [] };
@@ -47,23 +39,9 @@ export class ReporteCalculoActuarialComponent {
   }
 
   ngOnInit() {
-    this.getTipoSolicitud()
+    this.getSearchBandeja()
   }
 
-  getTipoSolicitud() {
-
-    this.spinnerService.show()
-    this.solicitudService.getTiposDeSolicitud()
-      .pipe(catchError(error => {
-        this.spinnerService.hide()
-        this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
-        return EMPTY
-      }))
-      .subscribe(x => {
-        this.spinnerService.hide()
-        this.listaParametros = x
-      })
-  }
 
   ngOnDestroy(): void {
     this.toastService.clear();
@@ -71,15 +49,11 @@ export class ReporteCalculoActuarialComponent {
 
   getSearchBandeja() {
 
-    if (this.tipoSolicitud === '' || this.tipoSolicitud === undefined) {
-      this.toastService.show('Debe seleccionar el tipo de solicitud', { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
-      return;
-    }
 
     this.spinnerService.show()
 
 
-    this.solicitudService.getBandejaReporte(this.tipoSolicitud, this.currentPage, this.itemsPerPage)
+    this.solicitudService.getBandejaReporte('01', this.currentPage, this.itemsPerPage)
       .pipe(catchError(error => {
         this.spinnerService.hide()
         this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
@@ -92,6 +66,15 @@ export class ReporteCalculoActuarialComponent {
         this.spinnerService.hide()
       })
 
+  }
+
+  proyectar(solicitud: BandejaSolicitud) {
+    const modalRef = this.modal.open(MessageOkComponent)
+    const message = `La proyección de la solicitud ${solicitud.idSolicitud} se realizó con éxito.`
+    modalRef.componentInstance.message = message
+    modalRef.closed.subscribe(x => {
+
+    })
   }
 
   generarReporte(solicitud: BandejaSolicitud) {
@@ -111,11 +94,6 @@ export class ReporteCalculoActuarialComponent {
   }
 
 
-  soloNumeros(e: KeyboardEvent): boolean {
-    const input = e.key;
-    const regExp = /^[0-9]+$/;
-    return regExp.test(input);
-  }
-
 
 }
+

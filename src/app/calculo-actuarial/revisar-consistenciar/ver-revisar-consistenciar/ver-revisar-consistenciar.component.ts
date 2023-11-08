@@ -7,9 +7,6 @@ import { SpinnerOverlayService } from "../../../services/overlay.service";
 import { ToastService } from "../../../services/toast.service";
 import { ConfirmDialogComponent } from "../../../shared/components/confirm-dialog/confirm-dialog.component";
 import { catchError, EMPTY } from "rxjs";
-import {
-  GenerarReporteCalculoActuarialComponent
-} from "../../../reportes/generar-reporte-calculo-actuarial/generar-reporte-calculo-actuarial.component";
 import { BandejaSolicitudRevisar } from "../../../interfaces/bandeja-solicitud-revisar";
 
 @Component({

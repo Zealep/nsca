@@ -1,25 +1,4 @@
 <span class="mt-3 mb-3 p-3 bg-primary rounded-4 text-white">{{title}}</span>
-<div class="mt-4">
-  <div class="row g-3">
-    <!--
-    <div class="col-auto">
-      <label for="año" class="form-label">Periodo</label>
-      <input type="text" (keypress)="soloNumeros($event)" class="form-control form-control-sm" id="año" maxlength="6"
-        placeholder="YYYY ó YYYYMM" [(ngModel)]="periodo">
-    </div>
-    -->
-    <div class="col-auto">
-      <label for="tipoSolicitud" class="form-label">Tipo de Solicitud</label>
-      <select id="tipoSolicitud" class="form-select form-select-sm custom-select" [(ngModel)]="tipoSolicitud">
-        <option value="">Seleccionar</option>
-        <option *ngFor="let t of listaParametros.items" value="{{t.idCod}}">{{t.vlCamp}}</option>
-      </select>
-    </div>
-    <div class="col-auto">
-      <button class="btn btn-primary text-white mt-4 btn-sm" (click)="getSearchBandeja()">Buscar</button>
-    </div>
-  </div>
-</div>
 
 <div class="mt-4">
   <div class="table-responsive">
@@ -28,9 +7,10 @@
         <tr>
           <th>Número</th>
           <th>Solicitud</th>
-          <th>Periodo</th>
-          <th>Tipo de Solicitud</th>
-          <th class="text-center">Generar reporte</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+          <th class="text-center">Proyectar Flujo</th>
+          <th class="text-center">Reporte</th>
         </tr>
       </thead>
       <tbody>
@@ -39,7 +19,11 @@
           <td>{{s.idSolicitud}}</td>
           <td>{{s.desTipoSolicitud}} {{s.idSolicitud}}</td>
           <td>{{s.anhoCalculo}}</td>
-          <td>{{s.desTipoSolicitud}}</td>
+          <td>{{s.descEstadoSolicitud}}</td>
+          <td class="text-center"><button class="btn btn-primary btn-sm" (click)="proyectar(s)">
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+          </td>
           <td class="text-center"><button class="btn btn-primary btn-sm" (click)="generarReporte(s)">
               <i class="fa-solid fa-file-lines"></i>
             </button>

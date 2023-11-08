@@ -34,7 +34,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let p of sortBandeja.items">
+        <tr
+          *ngFor="let p of sortBandeja.items | paginate: { id: 'server', itemsPerPage: itemsPerPage, currentPage: currentPage}">
           <td>{{p.idTabl}}</td>
           <td>{{p.txDesc}}</td>
           <td>{{p.descTiRegi}}</td>

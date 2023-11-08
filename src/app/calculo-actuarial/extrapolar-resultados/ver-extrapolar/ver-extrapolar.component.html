@@ -11,7 +11,7 @@
       <div class="col-6">
         <label for="tipoSolicitud" class="form-label">Tipo de Solicitud</label>
         <input type="text" class="form-control" id="tipoSolicitud" value="{{solicitud.desTipoSolicitud}}" disabled
-               readonly>
+          readonly>
       </div>
 
       <div class="col-6">
@@ -27,33 +27,32 @@
         <label for="paramsExtra" class="form-label">PARÁMETROS DE EXTRAPOLACIÓN</label>
         <table class="table table-sm table-bordered" id="paramsExtra">
           <thead>
-          <tr>
-            <th>Tipo</th>
-            <th>Cantidad de Población Total
-              (TOTCONT)</th>
-            <th>Factor</th>
-            <th>Cantidad de la muestra
-              (MUESCONT)</th>
-            <th>Extrapolar</th>
+            <tr>
+              <th>Tipo</th>
+              <th>Cantidad de Población Total
+                (TOTCONT)</th>
+              <th>Factor</th>
+              <th>Cantidad de la muestra
+                (MUESCONT)</th>
+              <th>Extrapolar</th>
 
-          </tr>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let p of solicitud.planilla">
-            <td class="text-center">{{p.desTipPla}}</td>
-            <td class="text-center">{{p.numPerPla}}</td>
-            <td class="text-center">{{p.desEst}}</td>
-            <td class="text-center">{{p.numIncosPla}}
-            </td>
-            <td class="text-center">
-              <button class="btn btn-primary btn-sm"
-                      (click)="dialogExtrapolar(p.codTipPla)">
-                <i class="fa-solid fa-spinner"></i>
-              </button>
+            <tr *ngFor="let p of solicitud.planilla">
+              <td class="text-center">{{p.desTipPla}}</td>
+              <td class="text-center">{{p.cantPoblaTotal}}</td>
+              <td class="text-center">{{p.factor}}</td>
+              <td class="text-center">{{p.cantMuestra}}
+              </td>
+              <td class="text-center">
+                <button class="btn btn-primary btn-sm" (click)="dialogExtrapolar(p.codTipPla)">
+                  <i class="fa-solid fa-spinner"></i>
+                </button>
 
-            </td>
+              </td>
 
-          </tr>
+            </tr>
 
           </tbody>
 

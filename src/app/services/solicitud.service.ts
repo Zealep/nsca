@@ -11,6 +11,7 @@ import { BandejaSolicitudCarga } from '../interfaces/bandeja-solicitud-carga';
 import { environment } from 'src/environments/environment';
 import { BandejaSolicitudCalculo } from '../interfaces/bandeja-solicitud-calculo';
 import { BandejaSolicitudRevisar } from "../interfaces/bandeja-solicitud-revisar";
+import { BandejaExtrapolar } from '../interfaces/bandeja-extrapolar';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class SolicitudService {
   private urlSolicitud: string = `${environment.hostSolicitud}`;
   private urlCarga: string = `${environment.hostCarga}`;
   private urlCalculo: string = `${environment.hostCalculo}`;
+  private urlReporte: string = `${environment.hostReporte}`;
 
   constructor(
     private http: HttpClient) {
@@ -199,13 +201,19 @@ export class SolicitudService {
       );
   }
 
-  aprobarPlanilla(tipoSolicitud: string, codSolicitud: number, codPlanilla: string) {
+  aprobarPlanilla(tipoSolicitud: string, codSolicitud: number, codPlanilla: string, usuario: string, ip: string) {
     let params = new HttpParams()
     params = params.append("tiposPlanilla", codPlanilla)
 
-    return this.http.put<any>(`${this.urlCalculo}/calculo/${tipoSolicitud}-${codSolicitud}/aprobarPlanilla`, {
+    const headers = new HttpHeaders({
+      'idUsuaCrea': usuario,
+      'ipUsuaCrea': ip
+    });
+
+    return this.http.put<any>(`${this.urlCalculo}/calculo/${tipoSolicitud}-${codSolicitud}/aprobarPlanilla`, null, {
+      headers: headers,
       params: params
-    }
+    },
     )
       .pipe(
         catchError(this.handleError)
@@ -225,6 +233,26 @@ export class SolicitudService {
       );
   }
 
+  getBandejaExtrapolar(tipoSolicitud: string) {
+    let params = new HttpParams()
+    params = params.append("tipoSolicitud", tipoSolicitud)
+
+    return this.http.get<Root<BandejaExtrapolar>>(`${this.urlCalculo}/calculo/solicitudExtrapolacion`,
+      {
+        params: params
+      })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getCalculoExtrapolacion(tipoPLanilla: string, codigoSolicitud: string) {
+    return this.http.get<Root<BandejaExtrapolar>>(`${this.urlCalculo}/${tipoPLanilla}-${codigoSolicitud}/obtenerCalculoExtrapolacion`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   cerrarPlanilla(tipoPlanilla: string, codSolicitud: number, usuario: string, ip: string) {
 
     const headers = new HttpHeaders({
@@ -238,6 +266,39 @@ export class SolicitudService {
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  getBandejaReporte(tipoSolicitud: string, numPag: number, numRegPorPag: number) {
+    let params = new HttpParams()
+    params = params.append("tipoSolicitud", tipoSolicitud)
+
+    params = params.append("numPag", numPag)
+    params = params.append("numRegPorPag", numRegPorPag)
+
+    return this.http.get<Root<BandejaSolicitud>>(`${this.urlReporte}/reporte/solicitud`,
+      {
+        params: params
+      })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  descargarReporte(codigoSolicitud: string, gastAdmi: string, tipMoneda: string, tipoInforme: string) {
+    let params = new HttpParams()
+    params = params.append("gastAdmi", gastAdmi)
+    params = params.append("tipMoneda", tipMoneda)
+    params = params.append("tipoInforme", tipoInforme)
+
+    return this.http.get(`${this.urlReporte}/reporte/${codigoSolicitud}/obtenerReporte`,
+      {
+        params: params,
+        responseType: 'blob'
+      })
+      .pipe(
+        catchError(this.handleError)
+      );
+
   }
 
   private handleError(error: HttpErrorResponse) {

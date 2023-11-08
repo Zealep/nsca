@@ -73,16 +73,18 @@ export class BandejaParametroCalculoComponent {
 
   getSearchBandeja() {
 
+
     if (this.tipoSolicitud === '' || this.tipoSolicitud === undefined) {
       this.toastService.show('Debe seleccionar el tipo de solicitud', { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
       return;
     }
 
+
     this.spinnerService.show()
 
 
     //this.parametroService.getBandejaParametro(this.tipoSolicitud, this.parametro, this.descripcion, this.currentPage, this.itemsPerPage)
-    this.parametroService.getBandejaParametro('19990', 'TASAREEM19', 'TASA', 1, 10)
+    this.parametroService.getBandejaParametro(this.tipoSolicitud, this.parametro, this.descripcion, this.currentPage, this.itemsPerPage)
       .pipe(catchError(error => {
         this.spinnerService.hide()
         this.toastService.show(error, { classname: 'bg-danger text-white', delay: 3000, icon: 'ban' })
@@ -104,7 +106,7 @@ export class BandejaParametroCalculoComponent {
       });
     modalRef.componentInstance.solicitud = a
     modalRef.closed.subscribe(x => {
-
+      this.getSearchBandeja()
     })
   }
 

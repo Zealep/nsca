@@ -20,9 +20,8 @@
 
       <div class="col-6">
         <label for="parametro" class="form-label">ID VALOR</label>
-        <input type="text" class="form-control" id="parametro" value="" disabled readonly>
+        <input type="text" class="form-control" id="parametro" [(ngModel)]="idValor" disabled readonly>
       </div>
-
     </div>
 
     <div class="my-3">
@@ -30,23 +29,27 @@
 
     </div>
 
-    <div class="row">
-      <div class="col-6">
-        <label for="parametro" class="form-label">Cantidad de meses</label>
-        <input type="text" class="form-control" id="parametro" value="">
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-6">
-        <div class="form-check">
-          <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" value="">
-            Indicador para actualizar los aportantes del CIA Sunat
-          </label>
+    <form [formGroup]="formulario" (ngSubmit)="grabar()">
+      <div *ngFor="let campo of campos">
+        <div class="form-group">
+          <label for="{{ campo.label }}">{{ campo.label }}</label>
+          <ng-container [ngSwitch]="campo.tipo">
+            <input *ngSwitchCase="1" [id]="campo.label" [formControlName]="campo.label" type="number"
+              class="form-control">
+            <input *ngSwitchCase="2" [id]="campo.label" [formControlName]="campo.label" type="text"
+              class="form-control">
+            <input *ngSwitchCase="3" [id]="campo.label" [formControlName]="campo.label" type="email"
+              class="form-control">
+            <input *ngSwitchCase="4" [id]="campo.label" [formControlName]="campo.label" type="date"
+              class="form-control">
+            <div *ngSwitchCase="5" class="form-check">
+              <input [id]="campo.label" [formControlName]="campo.label" type="checkbox" class="form-check-input">
+              <label [for]="campo.label" class="form-check-label">{{ campo.label }}</label>
+            </div>
+          </ng-container>
         </div>
       </div>
-    </div>
+    </form>
 
 
   </div>
