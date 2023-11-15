@@ -2,7 +2,7 @@
 
   <div>
     <img src="./assets/images/icon-user.svg" class="me-2" width="20px" height="20px">
-    <span class="title-form"><strong>Solicitud N° </strong></span>
+    <span class="title-form"><strong>Solicitud N° {{this.solicitud.idSolicitud}} </strong></span>
     <span class="ms-5">Usuario: {{usuario}}</span>
   </div>
 
@@ -10,44 +10,107 @@
     <div class="row">
       <div class="col-6">
         <label for="tipoSolicitud" class="form-label">Tipo de Solicitud</label>
-        <input type="text" class="form-control" id="tipoSolicitud" value="" disabled
-               readonly>
+        <input type="text" class="form-control" id="tipoSolicitud" value="{{this.solicitud.desTipoSolicitud}}" disabled
+          readonly>
       </div>
 
       <div class="col-6">
         <label for="periodo" class="form-label">Periodo de Cálculo</label>
-        <input type="text" class="form-control" id="periodo" value="" disabled readonly>
+        <input type="text" class="form-control" id="periodo" value="{{this.solicitud.anhoCalculo}}" disabled readonly>
       </div>
 
       <div class="row">
         <div class="col-6">
           <label for="tipoPlanilla" class="form-label">Planilla</label>
-          <input type="text" class="form-control" id="tipoPlanilla" value="" disabled
-                 readonly>
+          <input type="text" class="form-control" id="tipoPlanilla" value="{{tipoPlanillaNombre}}" disabled readonly>
         </div>
       </div>
 
     </div>
 
-    <div class="row mt-3" >
+    <div class="row mt-3">
 
       <div class="col-12">
         <label for="infoCalculo" class="form-label">Información del Cálculo</label>
         <table class="table table-sm table-bordered" id="infoCalculo">
           <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Valor</th>
+            <tr>
+              <th>Variable</th>
+              <th>Valor</th>
 
 
-          </tr>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-<!--          <tr *ngFor="let p of solicitud.planilla">-->
-            <td class="text-center"></td>
-            <td class="text-center"></td>
-          </tr>
+            <tr>
+              <td>Tipo Planilla</td>
+              <td>{{this.resultadoExtrapolar.desTipPla}}</td>
+            </tr>
+            <tr>
+              <td>N° Solicitud</td>
+              <td>{{this.resultadoExtrapolar.idSolicitud}}</td>
+            </tr>
+            <tr>
+              <td>N° Personas Planilla</td>
+              <td class="text-end">{{this.resultadoExtrapolar.numPerPla}}</td>
+            </tr>
+            <tr>
+              <td>Planilla Mensual Total(Actual)</td>
+              <td class="text-end">{{this.resultadoExtrapolar.mtoBonBci | number:'1.2'}}</td>
+            </tr>
+            <tr>
+              <td>Planilla Mensual Total(Propuesto)</td>
+              <td class="text-end">{{this.resultadoExtrapolar.mtoBonBea | number:'1.2'}}</td>
+            </tr>
+            <tr>
+              <td>Planilla Mensual Total(Diferencia)</td>
+              <td class="text-end">{{this.resultadoExtrapolar.mtoApo | number:'1.2'}}</td>
+            </tr>
+            <tr>
+              <td>Planilla Anual Total(Actual)</td>
+              <td class="text-end">{{this.resultadoExtrapolar.mtoBonBgi | number:'1.2'}}</td>
+            </tr>
+            <tr>
+              <td>Planilla Anual Total(Propuesto)</td>
+              <td class="text-end">{{this.resultadoExtrapolar.mtoBonViu | number:'1.2'}}</td>
+            </tr>
+            <tr>
+              <td>Planilla Anual Total(Diferencia)</td>
+              <td class="text-end">{{this.resultadoExtrapolar.mtoIntDevCon | number:'1.2'}}</td>
+            </tr>
+            <tr>
+              <td *ngIf="this.resultadoExtrapolar.tipoMone === '1'">Reserva Actuarial Millones de S/. (Actual)</td>
+              <td *ngIf="this.resultadoExtrapolar.tipoMone !== '1'">Reserva Actuarial Millones de US $. (Actual)</td>
+              <td class="text-end">{{this.resultadoExtrapolar.mtoPenFut | number:'1.2'}}</td>
+            </tr>
+            <tr>
+              <td *ngIf="this.resultadoExtrapolar.tipoMone === '1'">Reserva Actuarial Millones de S/. (Propuesto)</td>
+              <td *ngIf="this.resultadoExtrapolar.tipoMone !== '1'">Reserva Actuarial Millones de US $. (Propuesto)</td>
+
+              <td class="text-end">{{this.resultadoExtrapolar.tasReemplazo | number:'1.2'}}</td>
+            </tr>
+            <tr>
+              <td *ngIf="this.resultadoExtrapolar.tipoMone === '1'">Reserva Actuarial Millones de S/. (Diferencia)</td>
+              <td *ngIf="this.resultadoExtrapolar.tipoMone !== '1'">Reserva Actuarial Millones de US $. (Diferencia)
+              </td>
+
+              <td class="text-end">{{this.resultadoExtrapolar.mtoDevCon | number:'1.2'}}</td>
+            </tr>
+
+            <tr>
+              <td>Cantidad de Población Total</td>
+              <td class="text-end">{{this.resultadoExtrapolar.cantPoblaTotal}}</td>
+            </tr>
+
+            <tr>
+              <td>Factor de extrapolación</td>
+              <td class="text-end">{{this.resultadoExtrapolar.factor | number:'1.2'}}</td>
+            </tr>
+
+            <tr>
+              <td>Cantidad de la muestra</td>
+              <td class="text-end">{{this.resultadoExtrapolar.cantMuestra}}</td>
+            </tr>
 
           </tbody>
 
@@ -61,19 +124,34 @@
         <label for="resulProce" class="form-label">Resultado Proceso de Extrapolación</label>
         <table class="table table-sm table-bordered" id="resulProce">
           <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Valor</th>
+            <tr>
+              <th>Variable</th>
+              <th>Valor</th>
 
 
-          </tr>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-<!--          <tr *ngFor="let p of solicitud.planilla">-->
-            <td class="text-center"></td>
-            <td class="text-center"></td>
-          </tr>
+            <tr>
+              <td>Planilla Mensual Total (Diferencia) * Factor</td>
+              <td class="text-end">
+                {{ (this.resultadoExtrapolar.mtoApo * this.resultadoExtrapolar.factor) | number:'1.2'}}</td>
+            </tr>
+
+            <tr>
+              <td>Planilla Anual Total (Diferencia) * Factor</td>
+              <td class="text-end">
+                {{ (this.resultadoExtrapolar.mtoIntDevCon * this.resultadoExtrapolar.factor) | number:'1.2'}}</td>
+            </tr>
+
+            <tr>
+              <td *ngIf="this.resultadoExtrapolar.tipoMone === '1'">Reserva Actuarial Millones de S/. (Diferencia) *
+                Factor</td>
+              <td *ngIf="this.resultadoExtrapolar.tipoMone !== '1'">Reserva Actuarial Millones de US $. (Diferencia) *
+                Factor</td>
+              <td class="text-end">
+                {{(this.resultadoExtrapolar.mtoDevCon * this.resultadoExtrapolar.factor) | number:'1.2'}}</td>
+            </tr>
 
           </tbody>
 

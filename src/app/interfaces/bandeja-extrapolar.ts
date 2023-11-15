@@ -1,7 +1,7 @@
 import { PlanillaExtrapolar } from "./planilla-extrapolar"
 
 export interface BandejaExtrapolar {
-  idSolicitud: number
+  idSolicitud: string
   descSolicitud: string
   anhoCalculo: string
   estadoSolicitud: string

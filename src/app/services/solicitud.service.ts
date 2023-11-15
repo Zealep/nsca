@@ -247,7 +247,17 @@ export class SolicitudService {
   }
 
   getCalculoExtrapolacion(tipoPLanilla: string, codigoSolicitud: string) {
-    return this.http.get<Root<BandejaExtrapolar>>(`${this.urlCalculo}/${tipoPLanilla}-${codigoSolicitud}/obtenerCalculoExtrapolacion`)
+    return this.http.get<Root<BandejaExtrapolar>>(`${this.urlCalculo}/calculo/${tipoPLanilla}-${codigoSolicitud}/obtenerCalculoExtrapolacion`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  calcularExtrapolacion(tipoPLanilla: string, codigoSolicitud: string, usuario: string, ip: string) {
+    return this.http.put<Root<BandejaExtrapolar>>(`${this.urlCalculo}/calculo/${tipoPLanilla}-${codigoSolicitud}/calcularExtrapolacion`, {
+      idUsuamodi: usuario,
+      ipUsuamodi: ip
+    })
       .pipe(
         catchError(this.handleError)
       );

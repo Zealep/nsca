@@ -34,9 +34,11 @@ export class VerExtrapolarComponent {
     this.usuario = sessionStorage.getItem('usuario')!
   }
 
-  dialogExtrapolar(tipoPlanilla: string) {
+  dialogExtrapolar(tipoPlanilla: string, tipoPlanillaNombre: string) {
     const modalRef = this.modal.open(ResultadoExtrapolarComponent)
-
+    modalRef.componentInstance.solicitud = this.solicitud
+    modalRef.componentInstance.tipoPlanilla = tipoPlanilla
+    modalRef.componentInstance.tipoPlanillaNombre = tipoPlanillaNombre
     modalRef.closed.subscribe(result => {
       if (result) {
       }
