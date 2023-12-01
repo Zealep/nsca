@@ -95,6 +95,7 @@ export class BandejaParametroCalculoComponent {
         this.sortBandeja = this.bandeja
         this.totalItems = x.paginacion.totalRegistros;
         this.spinnerService.hide()
+        this.currentPage = 1;
       })
 
   }

@@ -120,6 +120,7 @@ export class BandejaCalculoActuarialComponent implements OnInit, OnDestroy {
         this.sortBandeja = this.bandeja
         this.totalItems = x.paginacion.totalRegistros;
         this.spinnerService.hide()
+        this.currentPage = 1;
       })
 
   }

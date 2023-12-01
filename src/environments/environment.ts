@@ -4,11 +4,12 @@
 
 export const environment = {
   production: false,
-  hostSolicitud: 'http://172.31.31.192:1004/v1/calculoactuarial',
-  hostCarga: 'http://172.31.31.192:1006/v1/calculoactuarial',
   hostCalculo: 'http://172.31.31.192:1007/v1/calculoactuarial',
-  hostLogin: 'http://172.31.31.192:1009/v1/calculoactuarial',
+  //hostCarga: 'http://172.31.31.192:1006/v1/calculoactuarial',
+  hostCarga: 'http://localhost:8080/v1/calculoactuarial',
   hostReporte: 'http://172.31.31.192:1008/v1/calculoactuarial',
+  hostSolicitud: 'http://172.31.31.192:1004/v1/calculoactuarial',
+  hostLogin: 'http://172.31.31.192:1009/v1/calculoactuarial',
   mock: 'http://demo4873478.mockable.io/v1/calculoactuarial'
 };
 

@@ -91,6 +91,7 @@ export class VerDetalleParametrosComponent implements OnInit {
         this.spinnerService.hide()
         this.parametros = x
         this.totalItems = x.paginacion.totalRegistros;
+        this.currentPage = 1;
       })
   }
 

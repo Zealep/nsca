@@ -6,7 +6,9 @@
       <label for="tabla" class="form-label">Tabla</label>
       <select id="tabla" class="form-select form-select-sm custom-select" [(ngModel)]="tabla">
         <option value="">Seleccionar</option>
-        <option></option>
+        <option *ngFor="let t of listaTipoTabla.items" value="{{t.aliasTabla}}">{{t.aliasTabla}}
+        </option>
+
       </select>
     </div>
 
@@ -14,7 +16,8 @@
       <label for="edad" class="form-label">Edad</label>
       <select id="edad" class="form-select form-select-sm custom-select" [(ngModel)]="edad">
         <option value="">Seleccionar</option>
-        <option></option>
+        <option *ngFor="let t of listaEdades.items" value="{{t.numero}}">{{t.numero}}
+        </option>
       </select>
     </div>
 
@@ -37,10 +40,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let p of sortBandeja.items">
-          <td>{{p.idTabl}}</td>
-          <td>{{p.txDesc}}</td>
-          <td>{{p.descTiRegi}}</td>
+        <tr
+          *ngFor="let p of sortBandeja.items | paginate: { id: 'server', itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }">
+          <td>{{p.nomTabla}}</td>
+          <td>{{p.edad}}</td>
+          <td>{{p.valor | number: '1.1-20'}}</td>
         </tr>
       </tbody>
     </table>

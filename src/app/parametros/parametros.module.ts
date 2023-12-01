@@ -17,7 +17,6 @@ import { CargaTablaMortalidadComponent } from './mortalidad-esperanza/carga-tabl
 @NgModule({
   declarations: [
 
-
     BandejaParametroCalculoComponent,
     ValorParametroComponent,
     GrabarParametroComponent,

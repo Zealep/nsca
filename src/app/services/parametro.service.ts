@@ -7,6 +7,9 @@ import { catchError, throwError } from 'rxjs';
 import { BandejaSolicitudRevisar } from '../interfaces/bandeja-solicitud-revisar';
 import { BandejaParametro } from '../interfaces/bandeja-parametros';
 import { ParametroRequest } from '../interfaces/parametro-request';
+import { BandejaMortalidad } from '../interfaces/bandeja-mortalidad';
+import { TipoTablaList } from '../interfaces/list-tipo-tabla';
+import { EdadList } from '../interfaces/list-edad';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,7 @@ import { ParametroRequest } from '../interfaces/parametro-request';
 export class ParametroService {
 
   private urlSolicitud: string = `${environment.hostSolicitud}`;
+  private urlCarga: string = `${environment.hostCarga}`;
 
 
   constructor(
@@ -51,6 +55,54 @@ export class ParametroService {
   saveParametros(idTabla: string, idCod: string, req: ParametroRequest) {
 
     return this.http.put<any>(`${this.urlSolicitud}/parametros/${idTabla}-${idCod}/registrarParametro`, req)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getBandejaMortalidad(nomTabla: string, edad: string, numPag: number, numRegPorPag: number) {
+    let params = new HttpParams()
+
+    params = params.append("tabla", nomTabla)
+    params = params.append("edad", edad)
+
+    params = params.append("numPag", numPag)
+    params = params.append("numRegPorPag", numRegPorPag)
+
+    return this.http.get<Root<BandejaMortalidad>>(`${this.urlCarga}/mortalidad/listar`,
+      {
+        params: params
+      })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  listTipoTablas() {
+    return this.http.get<TipoTablaList>(`${this.urlCarga}/mortalidad/obtenerTablas`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  listEdades() {
+    return this.http.get<EdadList>(`${this.urlCarga}/mortalidad/obtenerEdades`)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  cargarTablaMortalidad(usuario: string, ip: string, formData: FormData) {
+
+    const headers = new HttpHeaders({
+      'idUsuaCrea': usuario,
+      'ipUsuaCrea': ip
+    });
+
+    return this.http.post<any>(`${this.urlCarga}/mortalidad/cargar`,
+      formData, {
+      headers: headers
+    })
       .pipe(
         catchError(this.handleError)
       );
